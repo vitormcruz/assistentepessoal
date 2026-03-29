@@ -32,40 +32,18 @@ com o objetivo de discutir e votar sobre a ordem do dia constante da convocaçã
 A assembleia foi presidida por <nome do presidente> (<unidade do presidente>), e secretariada por <nome do secretário>
 (<unidade do secretário>).
 
-### 2. Procedimentos para habilitação dos condôminos e procuradores
+### 2. Procedimentos para habilitação dos condôminos, procuradores e Presença
 
 Logo após o preâmbulo, sem uma seção definida, descreva os procedimentos de habilitação e os eventos
-relacionados ocorridos durante a assembleia. Inclua:
+relacionados ocorridos durante a assembleia. **Esta seção é obrigatória e deve conter TODOS os itens abaixo.** Inclua:
 
-- Os procedimentos padrão listados abaixo (use o texto como referência);
-- Quaisquer esclarecimentos ou ocorrências sobre habilitação mencionados na transcrição;
+ - Registre **obrigatoriamente** as perguntas feitas pelo presidente ao síndico sobre adimplência dos condôminos e sobre as procurações, bem como as respostas dadas pelo síndico (exemplo: se todos estão adimplentes, quantas procurações foram validadas, etc.);
 - Deve-se descrever claramente os condôminos que possuem procurações e quem os representa;
 - A chamada dos condôminos, em texto corrido, informando os números dos apartamentos e se estão
   presentes ou ausentes;
-- Registre condominos que entraram na reunião mais tarde, com o respectivo horário de entrada;
+- Registre condôminos que entraram na reunião mais tarde, com o respectivo horário de entrada;
 - A quantidade total de condôminos presentes no início deve refletir essas novas entradas — ou seja,
   deve corresponder a todos os presentes até o final da reunião.
-
-Procedimentos padrão de habilitação:
-
-- Nos termos do art. 1.335 do Código Civil, somente os condôminos quites com as taxas condominiais
-  poderão participar e votar na assembleia;
-- As unidades que permanecerem inadimplentes até 48 (quarenta e oito) horas úteis antes da realização
-  da assembleia estarão impedidas de participar;
-- Os senhores representantes deverão ter seus mandatos revestidos das formalidades legais, inclusive
-  firma reconhecida ou com assinatura digital, e deverão encaminhar para a administração direta do
-  condomínio com 72 (setenta e duas) horas úteis antes da realização da assembleia, para que possam
-  ser validadas;
-- Recomenda-se que os condôminos e/ou procuradores legais habilitados acessem a plataforma de
-  transmissão com, no mínimo, 30 (trinta) minutos de antecedência, a fim de realizar eventuais
-  ajustes de conexão;
-- É pré-requisito do participante garantir uma estrutura adequada de internet e equipamentos que
-  suportem transmissão de áudio e vídeo. Não é recomendado o acesso em trânsito e/ou uso de telefonia
-  móvel 3G/4G em razão de eventuais instabilidades. Recomenda-se o uso de internet banda larga ou
-  similar;
-- Nos termos do § 3º do art. 1.354-A do Código Civil, somente após a somatória de todos os votos e a
-  respectiva divulgação será lavrada a ata da assembleia geral, também em meio eletrônico, momento em
-  que se dará o seu encerramento.
 
 ### 3. Ordem do Dia
 
