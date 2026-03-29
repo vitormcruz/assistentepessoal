@@ -9,15 +9,15 @@ A assembleia foi presidida por Vítor Medina Cruz (102), e secretariada por Bár
 
 ---
 
-### Procedimentos para habilitação dos condôminos e procuradores
-
-Nos termos do art. 1.335 do Código Civil, somente os condôminos quites com as taxas condominiais poderão participar e votar na assembleia. As unidades que permanecerem inadimplentes até 48 (quarenta e oito) horas úteis antes da realização da assembleia estarão impedidas de participar. Os senhores representantes deverão ter seus mandatos revestidos das formalidades legais, inclusive firma reconhecida ou com assinatura digital, e deverão encaminhar para a administração direta do condomínio com 72 (setenta e duas) horas úteis antes da realização da assembleia, para que possam ser validadas. Recomenda-se que os condôminos e/ou procuradores legais habilitados acessem a plataforma de transmissão com, no mínimo, 30 (trinta) minutos de antecedência, a fim de realizar eventuais ajustes de conexão. É pré-requisito do participante garantir uma estrutura adequada de internet e equipamentos que suportem transmissão de áudio e vídeo. Não é recomendado o acesso em trânsito e/ou uso de telefonia móvel 3G/4G em razão de eventuais instabilidades. Recomenda-se o uso de internet banda larga ou similar. Nos termos do § 3º do art. 1.354-A do Código Civil, somente após a somatória de todos os votos e a respectiva divulgação será lavrada a ata da assembleia geral, também em meio eletrônico, momento em que se dará o seu encerramento.
+### Procedimentos para habilitação dos condôminos, procuradores e Presença
 
 Realizada a chamada dos condôminos, foram verificados presentes, inicialmente, vinte e duas unidades, a saber: 101 (Paola Picorelli), 102 (Vítor Medina Cruz), 103 (Gilson Milagres), 104 (Tatiana Loureiro), 105 (Raphael Andrade), 106 (Wilson Gonçalves Ferreira Junior), 201 (Rogério Rodrigues), 203 (Rafael Nogueira, por procuração), 204 (Luciana Silva), 205 (Magda Flister Vasconcelos), 206 (Bárbara Manhães, por procuração, representando Renata), 301 (Ronan Arantes, por procuração), 303 (João Pedro, por procuração), 306 (Monique Silvino), 401 e 404 (Dorcas Mothe), 402 (Fábio Sousa), 501 (André Lage), 502 e 506 (Paola Picorelli, por procuração), 504 e 505 (Victor Mota). A unidade 201 (Rogério Rodrigues) ingressou na reunião logo após o início da chamada e foi devidamente registrada como presente.
 
 Ao longo da reunião, ingressaram mais três unidades: 202 (Érica e Leandro), 406 (Tiago Nunes) e 503 (Ronaldo Renault), por volta das vinte horas, totalizando vinte e cinco (25) unidades presentes ao final da assembleia.
 
-Seis (6) unidades estiveram representadas por procuração: 203, 206, 301, 303, 502 e 506. Todas as procurações foram previamente validadas e encaminhadas à administração do condomínio no prazo legal.
+O presidente Vítor Medina Cruz perguntou ao síndico Wilson Gonçalves Ferreira Junior se todos os condôminos presentes estavam adimplentes. O síndico confirmou que não havia nenhum inadimplente entre os presentes.
+
+O presidente questionou se as procurações apresentadas estavam em conformidade. O síndico confirmou que todas as seis (6) procurações — referentes às unidades 203, 206, 301, 303, 502 e 506 — haviam sido encaminhadas previamente e encontravam-se validadas em posse da administração do condomínio.
 
 Os condôminos ausentes foram: 302, 304, 305, 403 e 405.
 
@@ -92,19 +92,19 @@ Os membros eleitos foram informados de que deverão encaminhar seus CPFs e nomes
 
 ### 3. Definição do Orçamento 2026/2027
 
-O síndico Wilson Gonçalves Ferreira Junior apresentou a previsão orçamentária elaborada pela administradora Diplantec para o período 2026/2027. Informou que houve aumentos significativos em diversas despesas, incluindo energia elétrica (aumento expressivo), água (de aproximadamente R$ 5.000,00 para R$ 6.000,00) e serviços do auxiliar de serviços gerais (aumento de 21% na previsão, incluindo décimo terceiro e encargos trabalhistas decorrentes do tempo de serviço).
+O síndico Wilson Gonçalves Ferreira Junior apresentou a previsão orçamentária elaborada pela administradora Adiplantec para o período 2026/2027. Informou que houve aumentos significativos em diversas despesas, incluindo energia elétrica (aumento expressivo), água (de aproximadamente R$ 5.000,00 para R$ 6.000,00) e serviços do auxiliar de serviços gerais (aumento de 21% na previsão, incluindo décimo terceiro e encargos trabalhistas decorrentes do tempo de serviço).
 
-A Diplantec propôs um reajuste de 9,62% (nove vírgula sessenta e dois por cento) na cota condominial, visando corrigir a defasagem do rateio atual (que está em R$ 23.000,00) em relação às despesas reais (aproximadamente R$ 24.000,00), garantindo uma margem de 3,45% (três vírgula quarenta e cinco por cento) de folga orçamentária. O fundo de reserva seria mantido em 5% (cinco por cento) sobre o valor da nova cota condominial, conforme já deliberado em assembleia anterior.
+A Adiplantec propôs um reajuste de 9,62% (nove vírgula sessenta e dois por cento) na cota condominial, visando corrigir a defasagem do rateio atual (que está em R$ 23.000,00) em relação às despesas reais (aproximadamente R$ 24.000,00), garantindo uma margem de 3,45% (três vírgula quarenta e cinco por cento) de folga orçamentária. O fundo de reserva seria mantido em 5% (cinco por cento) sobre o valor da nova cota condominial, conforme já deliberado em assembleia anterior.
 
 Após esclarecimentos sobre os percentuais propostos e a composição dos valores — incluindo a explicação de que o aumento de 9,62% visa cobrir tanto a defasagem acumulada quanto o reajuste das despesas para o próximo exercício —, foi aberta a votação.
 
-Realizada a votação individual sobre a proposta da Diplantec (9,62% de reajuste na cota condominial e manutenção dos 5% sobre a cota como fundo de reserva), o resultado foi o seguinte:
+Realizada a votação individual sobre a proposta da Adiplantec (9,62% de reajuste na cota condominial e manutenção dos 5% sobre a cota como fundo de reserva), o resultado foi o seguinte:
 
 - **A favor (todas as 25 unidades presentes)**: 101, 102, 103, 104, 105, 106, 201, 202, 203, 204, 205, 206, 301, 303, 306, 401, 402, 404, 406, 501, 502, 503, 504, 505, 506.
 
 **Resultado**: A proposta orçamentária foi aprovada por unanimidade.
 
-O síndico se comprometeu a solicitar esclarecimentos detalhados da Diplantec sobre a composição dos percentuais, especialmente no que se refere ao item pessoal, e convidou o condômino Vitor Cruz (102) para participar dessa reunião com a administradora.
+O síndico se comprometeu a solicitar esclarecimentos detalhados da Adiplantec sobre a composição dos percentuais, especialmente no que se refere ao item pessoal, e convidou o condômino Vitor Cruz (102) para participar dessa reunião com a administradora.
 
 ---
 
@@ -130,7 +130,7 @@ O condômino Victor Mota (504) questionou se a função de limpeza ampla está c
 
 O síndico Wilson Gonçalves Ferreira Junior apresentou detalhadamente a utilização do fundo de reserva para a realização de obra emergencial no condomínio. O fundo de reserva, que totalizava aproximadamente R$ 24.000,00 (vinte e quatro mil reais), foi integralmente comprometido para a obra, que envolve:
 
-- **Rampa de acesso**: substituição completa da manta impermeabilizante, que estava ausente em parte da rampa (a administradora Diplantec havia aplicado manta apenas em parte da extensão), causando infiltração severa nas casas de pressurização e incêndio e nos apartamentos inferiores;
+- **Rampa de acesso**: substituição completa da manta impermeabilizante, que estava ausente em parte da rampa (a contrutora Aporte havia aplicado manta apenas em parte da extensão), causando infiltração severa nas casas de pressurização e incêndio e nos apartamentos inferiores;
 - **Apartamento do condômino Ronaldo (503)**: o teto da varanda, quarto e banheiro estão completamente infiltrados e mofados, com gesso perfurado e água caindo, situação que se agrava há quase um ano;
 - **Apartamento do condômino Vitor (504)**: manchas e perfuração no teto da varanda decorrentes da mesma infiltração;
 - **Piscina**: rejunte completo da piscina e do deck, que apresentam fissuras microscópicas permitindo passagem de água para o apartamento do condômino José (405); quebra e conserto de canto danificado; desobstrução e ampliação dos ralos, cuja saída de água estava obstruída por cimento;
@@ -233,7 +233,15 @@ Procedeu-se ao sorteio das vagas de garagem do condomínio, conforme distribuiç
 
 ### 9. Assuntos de interesse geral
 
-Não foram apresentados assuntos adicionais de interesse geral pelos condôminos presentes.
+A condômina Paola Picorelli (101), em nome próprio e como procuradora do Apto 502, trouxe à assembleia uma reclamação sobre o excesso de barulho provocado por festas realizadas no condomínio. Informou que o morador do Apto 502, que possui filho pequeno, vem sendo prejudicado por movimentação excessiva e ruídos em horários que ultrapassam o limite permitido, incluindo barulho por volta das duas horas da manhã, muito além do horário de encerramento das festas.
+
+Paola Picorelli acrescentou que, embora more no primeiro andar, a música das festas chega a alcançar sua varanda ao ponto de precisar fechar todas as janelas. Destacou que música ao vivo não é compatível com a acústica do prédio e que, ao término das festas, os convidados saem alterados, gritando e fazendo barulho, ecos que se propagam por todo o condomínio. Reforçou que, conforme a lei do silêncio, o horário de som deve ser respeitado até as 22h (dez horas), com limite máximo de decibéis, e que as infrações vêm se repetindo.
+
+A condômina ainda relatou que o Apto 506 (de propriedade de Fátima) também sofre com a utilização do corredor como extensão das festas, gerando barulho significativo dentro do apartamento.
+
+Paola Picorelli solicitou que os condôminos que realizam festas orientem seus convidados a respeitar o horário e o volume de som, e advertiu que, caso a situação não seja resolvida, as reclamações passarão a ser registradas no livro de reclamações do condomínio.
+
+O presidente Vítor Medina Cruz registrou a reclamação na ata e orientou que os pontos levantados ao longo da reunião que se enquadram como assuntos gerais sejam devidamente transcritos nesta seção.
 
 ---
 
