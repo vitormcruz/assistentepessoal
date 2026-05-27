@@ -159,7 +159,17 @@ Avalia matematica avancada. Inclui FrontierMath, AIME 2025, BRUMO 2025 e MATH-50
 | **Economico** | **GLM-5.1** | Elo Arena 1472 (mais alto entre open-weight), knowledge 85, instruction following 92. A $1.40/$4.40 por 1M tokens com licenca MIT. Excelente para discussoes que exigem precisao factual e seguimento de instrucoes complexas. |
 | **Budget** | **MiMo-V2.5** | Elo Arena 1429, contexto de 1M tokens, multimodal nativo. A $0.50/$1.50 por 1M tokens com licenca MIT. 40-60% mais eficiente em tokens que concorrentes. Bom para discussoes longas com imagens ou documentos anexados. |
 
-### 3. Orquestracao de agentes (modelo que coordena, delega e gerencia multiplos sub-agentes)
+### 3. Planejamento de codificacao/alteracao de um repo (analise de codebase, decomposicao de tarefas, criacao de planos de implementacao)
+
+Modelos nesta categoria se destacam por capacidade de compreender repositorios complexos, analisar requisitos, identificar dependencias e criar planos de implementacao estruturados. Importam: reasoning, knowledge, instruction following e contexto grande para absorver o repo inteiro.
+
+| Tipo | Modelo | Justificativa |
+|------|--------|---------------|
+| **Premium** | **Qwen3.7 Max** | Reasoning 96 (o mais alto da lista), score geral 92, contexto de 1M tokens. Ideal para analisar codebases inteiras, entender arquitetura, identificar impactos de mudancas e decompor tarefas complexas em planos acionaveis. |
+| **Economico** | **GLM-5.1** | Knowledge 85, instruction following 92, contexto de 203K. A $1.40/$4.40 por 1M tokens com MIT license. Excelente para planejamento que exige precisao factual sobre o repo e seguimento rigoroso de requisitos e constraints. |
+| **Budget** | **Qwen3.6 Plus** | Reasoning 62, contexto de 1M tokens. A $0.33/$1.95 por 1M tokens. Bom para analise de codebases grandes onde o contexto extenso e mais critico que reasoning de ponta. 78.8% SWE-bench Verified demonstra capacidade de entender codigo real. |
+
+### 4. Orquestracao de agentes (modelo que coordena, delega e gerencia multiplos sub-agentes)
 
 Modelos nesta categoria se destacam por recursos nativos de coordenacao multi-agente: swarm sampling, Agent Teams, ou arquitetura projetada para delegar tarefas a sub-agentes e consolidar resultados.
 
@@ -169,7 +179,7 @@ Modelos nesta categoria se destacam por recursos nativos de coordenacao multi-ag
 | **Economico** | **MiniMax M2.7** | Score 62 geral mas com SWE-Pro 56.22%, Terminal-Bench 57.0% e GDPval-AA Elo 1495 (mais alto entre open-weight). A apenas $0.30/$1.20 por 1M tokens. Suporta Agent Teams nativos para colaboracao multi-agente com identidade estavel. |
 | **Budget** | **MiniMax M2.5** | SWE-bench Verified 80.2%, Multi-SWE-Bench 51.3%, suporta Agent Teams. A $0.15/$1.20 por 1M tokens (o segundo mais barato da lista). 37% mais rapido que versoes anteriores. Ideal para fluxos multi-agente de alto volume onde custo e critico. |
 
-### 4. Agente codificador em workflow (modelo que executa tarefas de codigo em pipeline serial)
+### 5. Agente codificador em workflow (modelo que executa tarefas de codigo em pipeline serial)
 
 Modelos nesta categoria sao os melhores "executores" em um fluxo de trabalho serial: recebem instrucoes de um orquestrador (humano ou agente), executam tarefas de codificacao com alta qualidade e retornam resultados. Importam: coding, instruction following e eficiencia de tokens (pois workflows seriais acumulam contexto).
 
@@ -179,7 +189,7 @@ Modelos nesta categoria sao os melhores "executores" em um fluxo de trabalho ser
 | **Economico** | **MiMo-V2.5-Pro** | 57.2% SWE-bench Pro, 78.9% SWE-bench Verified, 68.4 Terminal-Bench. Diferencial critico para workflows seriais: usa 40-60% menos tokens por trajetoria que concorrentes (70K vs 140K+). A $1/$3 por 1M tokens com MIT license. Menos tokens acumulados = menor custo em pipelines longos. |
 | **Budget** | **GLM-5 (Reasoning)** | Score 80, coding 70, instruction following 84, math 92. A $1/$3.20 por 1M tokens com MIT license. Modo reasoning habilitado melhora resolucao de problemas complexos. Bom executor para tarefas de codigo que exigem raciocinio encadeado em workflows seriais. |
 
-### 5. Codificacao local com terminal (codificacao, debug e resolucao de problemas na maquina do usuario, com operacoes em terminal)
+### 6. Codificacao local com terminal (codificacao, debug e resolucao de problemas na maquina do usuario, com operacoes em terminal)
 
 | Tipo | Modelo | Justificativa |
 |------|--------|---------------|
@@ -195,6 +205,7 @@ Modelos nesta categoria sao os melhores "executores" em um fluxo de trabalho ser
 |---------|---------|-----------|--------|
 | Busca e coleta de conteudo | Qwen3.7 Max | Qwen3.6 Plus | DeepSeek V4 Flash |
 | Discussao sobre temas variados | Qwen3.7 Max | GLM-5.1 | MiMo-V2.5 |
+| Planejamento de codificacao | Qwen3.7 Max | GLM-5.1 | Qwen3.6 Plus |
 | Orquestracao de agentes | Kimi K2.6 | MiniMax M2.7 | MiniMax M2.5 |
 | Agente codificador em workflow | DeepSeek V4 Pro | MiMo-V2.5-Pro | GLM-5 (Reasoning) |
 | Codificacao local com terminal | DeepSeek V4 Pro | DeepSeek V4 Flash | Qwen3.6-35B-A3B (self-host) |
