@@ -1,7 +1,7 @@
 ---
 title: IA no Desenvolvimento de Software
 subtitle: Base comum de conceitos para o time de engenharia
-author: Time de Adoção de IA
+author: Comitê de Engenharia de Software - Frente de Dev com IA
 date: Junho 2026
 ---
 
@@ -134,7 +134,11 @@ Token é a **unidade atômica de processamento** de um LLM.
 
 Fontes: preços oficiais de Anthropic [1], OpenAI [3], Google [4].
 
-**Cenário realista:** agente refatora um módulo de 15 arquivos
+---
+
+## Cenário realista
+
+agente refatora um módulo de 15 arquivos
 (~30 min de trabalho):
 
 - Lê 15 arquivos, escreve as versões refatoradas, ~20 turnos de ida e volta
@@ -354,6 +358,10 @@ Usuário pergunta → Busca documentos relevantes → Injeta no contexto → LLM
 | Agentic RAG | 2025+ | O agente decide **se, quando e onde** buscar; auto-verifica resultado |
 
 **Exemplo Agentic RAG em 2026:**
+
+---
+
+## RAG na prática
 1. Usuário: "Qual a política de reembolso para clientes premium?"
 2. Agente avalia: preciso de informação externa → ativa busca
 3. Decide fonte: vector store de documentos internos (não web search)
