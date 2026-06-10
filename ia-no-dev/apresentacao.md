@@ -78,13 +78,12 @@ Fontes: [1] [2] [3] [4] — ver slide de referências ao final.
 
 ## Modelos abertos vs fechados: onde está a diferença?
 
-**Analogia do carro:** dois carros com o mesmo motor (modelo). Um tem
-suspensão premium, freios ABS e direção hidráulica (harness proprietário).
-O outro tem suspensão básica (harness open-source).
+Em tarefas simples (escrever uma função), modelos abertos e fechados têm
+desempenho próximo — a qualidade do código gerado é similar.
 
-- Em **linha reta** (gerar uma função simples), os dois empatam
-- Numa **pista com curvas** (resolver bug real em repositório de 500
-  arquivos), a diferença aparece:
+A diferença real aparece em **tarefas complexas e autônomas**: resolver
+bugs em repositórios reais com centenas de arquivos, onde o agente precisa
+planejar, buscar contexto, editar múltiplos arquivos e verificar o resultado.
 
 | Cenário | Taxa de acerto (SWE-bench Verified) |
 |---------|--------------------------------------|
@@ -92,8 +91,8 @@ O outro tem suspensão básica (harness open-source).
 | Modelo fechado + harness proprietário completo | ~80-88% |
 | Claude Opus 4.7 + Claude Code | 87,6% |
 
-> Não é o motor (modelo) que faz a diferença — é o **carro completo**
-> (harness) que direciona, restringe e estabiliza o modelo.
+> Não é o modelo puro que faz a diferença — é o **harness** que direciona,
+> restringe e estabiliza o modelo durante a execução autônoma.
 
 ---
 
@@ -149,9 +148,21 @@ Fontes: preços oficiais de Anthropic [1], OpenAI [3], Google [4].
 | Claude Opus 4.7 ($5/$25) | **$6,00** |
 | GPT-5.5 ($5/$30) | $6,20 |
 
-> Um bug complexo pode consumir **$6 em 30 minutos** no Opus.
-> Modele o custo antes de escolher o modelo. O barato resolve 80%
-> do dia a dia; reserve o frontier para tarefas críticas.
+- **Com cache (segunda execução em diante):** o system prompt e tools
+  já estão cacheados (90% de desconto no input)
+
+| Modelo | Custo da tarefa |
+|--------|----------------|
+| DeepSeek V4 Flash | $0,01 |
+| DeepSeek V4 Pro | $0,04 |
+| Claude Sonnet 4.6 | $0,90 |
+| Claude Opus 4.7 | $1,50 |
+| GPT-5.5 | $1,70 |
+
+> Um bug complexo pode consumir **$6 em 30 min** na primeira execução
+> (Opus 4.7), mas cai para **$1,50** nas execuções seguintes com cache.
+> Modele o custo antes de escolher o modelo: o barato resolve 80% do
+> dia a dia; reserve o frontier para tarefas críticas.
 
 ---
 
