@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" width="600" height="280">
+  <defs>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="280" rx="12" fill="#F8FAFC"/>
+
+  <!-- Harness (outer) -->
+  <rect x="30" y="40" width="540" height="200" rx="14" fill="#EEF2FF" stroke="#4F46E5" stroke-width="3" filter="url(#shadow)"/>
+  <text x="300" y="68" text-anchor="middle" fill="#4F46E5" font-size="14" font-weight="700" font-family="sans-serif">HARNESS — o ambiente completo de execução</text>
+  <text x="300" y="86" text-anchor="middle" fill="#6366F1" font-size="10" font-family="sans-serif">Guias · Sensores · Orquestração · Memória · Segurança</text>
+
+  <!-- Contexto (middle) -->
+  <rect x="105" y="100" width="390" height="110" rx="10" fill="#FEF3C7" stroke="#D97706" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="300" y="126" text-anchor="middle" fill="#D97706" font-size="12" font-weight="700" font-family="sans-serif">CONTEXTO — o que o modelo vê</text>
+  <text x="300" y="144" text-anchor="middle" fill="#92400E" font-size="10" font-family="sans-serif">System prompt · User input · Histórico · Tool results · RAG</text>
+
+  <!-- Prompt (inner) -->
+  <rect x="195" y="155" width="210" height="38" rx="8" fill="white" stroke="#F59E0B" stroke-width="2" filter="url(#shadow)"/>
+  <text x="300" y="179" text-anchor="middle" fill="#92400E" font-size="11" font-weight="700" font-family="sans-serif">PROMPT — a instrução</text>
+
+  <!-- Labels -->
+  <text x="300" y="260" text-anchor="middle" fill="#64748B" font-size="10" font-family="sans-serif">Prompt ⊂ Contexto ⊂ Harness — cada camada contém a anterior</text>
+</svg>

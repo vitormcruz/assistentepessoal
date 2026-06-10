@@ -29,7 +29,6 @@ date: Junho 2026
 | 7 | Skills — módulos de conhecimento reutilizável |
 | 8 | Harness — o ambiente completo de execução |
 | 9 | RAG — busca + geração |
-| 10 | Encerramento |
 
 ---
 
@@ -79,20 +78,22 @@ Fontes: [1] [2] [3] [4] — ver slide de referências ao final.
 
 ## Modelos abertos vs fechados: onde está a diferença?
 
-Modelos abertos e fechados têm desempenho próximo em geração simples de
-funções (HumanEval: ~92% vs ~95%).
+**Analogia do carro:** dois carros com o mesmo motor (modelo). Um tem
+suspensão premium, freios ABS e direção hidráulica (harness proprietário).
+O outro tem suspensão básica (harness open-source).
 
-A diferença real aparece quando falamos de **agentes autônomomos**
-resolvendo bugs em repositórios reais (SWE-bench Verified):
+- Em **linha reta** (gerar uma função simples), os dois empatam
+- Numa **pista com curvas** (resolver bug real em repositório de 500
+  arquivos), a diferença aparece:
 
-| Cenário | SWE-bench |
-|---------|-----------|
+| Cenário | Taxa de acerto (SWE-bench Verified) |
+|---------|--------------------------------------|
 | Modelo open-weight + agente open-source básico | ~50-65% |
 | Modelo fechado + harness proprietário completo | ~80-88% |
-| Claude Opus 4.7 + Claude Code (harness Anthropic) | 87,6% |
+| Claude Opus 4.7 + Claude Code | 87,6% |
 
-> O que faz diferença não é o modelo puro — é a **qualidade do harness**
-> que orquestra o agente, que o restringe e o direciona o modelo
+> Não é o motor (modelo) que faz a diferença — é o **carro completo**
+> (harness) que direciona, restringe e estabiliza o modelo.
 
 ---
 
@@ -123,7 +124,7 @@ Token é a **unidade atômica de processamento** de um LLM.
 
 - **Input tokens:** o que você envia (prompt, contexto, ferramentas)
 - **Output tokens:** o que o modelo gera — custa **3 a 6x mais** que input
-- **Prompt caching:** ~90% de desconto no input quando o prefixo não muda
+- **Prompt caching:** se o início do contexto (system prompt, tools) for idêntico entre chamadas consecutivas, o provedor reaproveita a computação já feita e cobra ~90% menos por esses tokens
 
 | Faixa | Exemplos | Input/1M tokens |
 |-------|----------|-----------------|
@@ -133,17 +134,24 @@ Token é a **unidade atômica de processamento** de um LLM.
 
 Fontes: preços oficiais de Anthropic [1], OpenAI [3], Google [4].
 
-**Cenário simples:** 1 tarefa de código = 10K tokens input + 2K output:
+**Cenário realista:** agente refatora um módulo de 15 arquivos
+(~30 min de trabalho):
 
-| Modelo | Sem cache | Com prompt caching (90%) |
-|--------|-----------|--------------------------|
-| Gemini 2.5 Flash ($0,30/$2,50) | $0,008 | ~$0,002 |
-| Claude Sonnet 4.6 ($3/$15) | $0,06 | ~$0,015 |
-| Claude Opus 4.7 ($5/$25) | $0,10 | ~$0,055 |
-| GPT-5.5 ($5/$30) | $0,11 | ~$0,06 |
+- Lê 15 arquivos, escreve as versões refatoradas, ~20 turnos de ida e volta
+- ~1M tokens de input acumulados nos 20 turnos, ~40K tokens de output
+- **Sem cache (primeira execução):**
 
-> Cache reduz o custo em ~80-90%. Projete o prefixo do contexto para ser
-> estável e aproveite esse desconto.
+| Modelo | Custo da tarefa |
+|--------|----------------|
+| DeepSeek V4 Flash ($0,14/$0,28) | $0,15 |
+| DeepSeek V4 Pro ($0,43/$0,87) | $0,47 |
+| Claude Sonnet 4.6 ($3/$15) | $3,60 |
+| Claude Opus 4.7 ($5/$25) | **$6,00** |
+| GPT-5.5 ($5/$30) | $6,20 |
+
+> Um bug complexo pode consumir **$6 em 30 minutos** no Opus.
+> Modele o custo antes de escolher o modelo. O barato resolve 80%
+> do dia a dia; reserve o frontier para tarefas críticas.
 
 ---
 
@@ -208,7 +216,7 @@ Turno 2: User: "Refatore o módulo payment.py..."
 ```
 
 > Em agentes de 50+ turnos, o histórico é o maior consumidor da janela
-> de contexto. É aqui que entra a operação **Compress** (seção 5).
+> de contexto — é aqui que a engenharia de contexto se torna essencial.
 
 ---
 
@@ -257,8 +265,8 @@ integração de IA agentiva.
 - **Adoção empresarial:** 41% das organizações de software já em produção (Stacklok 2026) [6]. Casos documentados: Bloomberg, Amazon, Block, Figma, Supabase, Stripe [5] [7]
 - **Comunidade:** +97M downloads/mês, +10K servidores, trajetória de adoção mais rápida que React e gRPC [8]
 
-> "MCP is no longer an emerging concept — it is the standard layer for
-> agentic AI systems." — NeuralCoreTech, Maio 2026 [5]
+> O MCP não é mais um conceito emergente — é a camada padrão para
+> sistemas de IA agentiva. (NeuralCoreTech, Maio 2026 [5])
 
 ---
 
@@ -270,10 +278,8 @@ integração de IA agentiva.
 | Código específico por par modelo-sistema | Compatível com qualquer modelo |
 | Manutenção N×M | Manutenção 1 por sistema |
 
-**Arquitetura:**
-```
-MCP Client (Claude, ChatGPT, VS Code)  ←→  JSON-RPC  ←→  MCP Server (banco, API)
-```
+![](imagens/mcp-arquitetura.png)
+
 Transportes: stdio (local) ou Streamable HTTP (remoto, produção).
 
 ---
@@ -321,34 +327,10 @@ Disciplina de projetar **tudo que o modelo vê** em cada etapa da execução.
 4. Tool results (resultados de chamadas anteriores)
 5. Retrieved knowledge (documentos buscados via RAG)
 
----
-
-## As 4 operações do contexto
-
-Definidas por LangChain como o framework mental da disciplina:
-
-| Operação | O que faz | Exemplo real |
-|----------|-----------|--------------|
-| **Write** | Persistir para uso futuro | Salvar sumário da conversa em memória entre sessões |
-| **Select** | Buscar a informação certa na hora certa | RAG: buscar docs relevantes, não tudo |
-| **Compress** | Reduzir tokens mantendo o essencial | Resumir histórico antigo da conversa em 3 linhas |
-| **Isolate** | Separar contexto entre agentes | Sub-agente de segurança não precisa ver o histórico de UI |
-
----
-
-## Exemplo prático: contexto bem vs mal projetado
-
-**Cenário:** agente precisa corrigir um bug de regra de negócio em um
-repositório com 500 arquivos.
-
-| Abordagem | O que o agente recebe | Resultado |
-|-----------|-----------------------|-----------|
-| Ruim (só prompt) | "Corrija o bug na validação de desconto" + dump de 500 arquivos no contexto + 30 tools | Informação relevante se perde no meio da janela; agente alucina solução |
-| Boa (com contexto) | **Select:** grep por "desconto", traz 8 arquivos. **Compress:** resume código não relacionado ao bug. **Isolate:** sub-agente foca só na lógica, outro cuida dos testes | Agente tem 8 arquivos relevantes + resumo do resto + ferramentas filtradas; resolve corretamente |
-
-> A diferença entre as duas abordagens não está no modelo nem no prompt —
-> está no **pipeline de contexto** que seleciona, comprime e isola
-> a informação antes de entregar ao modelo.
+**A ideia central:** em agentes que executam dezenas de turnos, o prompt
+inicial é uma fração mínima do que o modelo processa. O que realmente
+determina a qualidade da resposta é **como você seleciona, organiza e
+comprime** esses 5 componentes antes de entregá-los ao modelo.
 
 ---
 
@@ -388,25 +370,7 @@ elimina a principal fonte de ruído nas conversas.
 
 ## Exemplo concreto da distinção
 
-```
-┌─────────────────────────────────────────────┐
-│ Agente-Ferramenta: Claude Code               │
-│  (executa comandos, lê/escreve arquivos,     │
-│   gerencia git, chama APIs via MCP)          │
-│                                              │
-│  ┌──────────────────────────────────────┐   │
-│  │ Agente Customizado: "Engenheiro de    │   │
-│  │ Software Sênior Python"               │   │
-│  │ (system prompt + skills + regras)     │   │
-│  │                                      │   │
-│  │  ┌────────────────────────────┐     │   │
-│  │  │ Skill: Code Review          │     │   │
-│  │  │ Skill: Test Writer          │     │   │
-│  │  │ Skill: Security Audit       │     │   │
-│  │  └────────────────────────────┘     │   │
-│  └──────────────────────────────────────┘   │
-└─────────────────────────────────────────────┘
-```
+![](imagens/agentes-camadas.png)
 
 O OpenCode/ClaudeCode é o **agente-ferramenta** (a plataforma).
 O "Engenheiro de Software Sênior Python" é um **agente customizado**
@@ -506,6 +470,8 @@ barreiras que transforma um LLM puro em um agente funcional e seguro.
 | **Hooks** (freio) | Bloqueiam ações perigosas | PreToolUse: "não execute rm -rf" |
 | **Sub-agentes** (cavalos especializados) | Dividem a carga | Um para segurança, outro para testes, outro para docs |
 
+![](imagens/harness-arreio.png)
+
 ---
 
 ## Por que Harness é a camada que importa?
@@ -559,6 +525,10 @@ Usuário pergunta → Busca documentos relevantes → Injeta no contexto → LLM
 
 > RAG é o componente mais importante de engenharia de contexto para
 > sistemas que precisam de precisão factual.
+
+---
+
+![](imagens/hierarquia-ia.png)
 
 ---
 

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" width="720" height="420">
+  <defs>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="1" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="720" height="420" rx="12" fill="#F8FAFC"/>
+
+  <!-- Outer Box: Agente-Ferramenta -->
+  <rect x="30" y="20" width="660" height="380" rx="12" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2.5" filter="url(#shadow)"/>
+  <rect x="30" y="20" width="660" height="38" rx="12" fill="#4F46E5"/>
+  <rect x="30" y="40" width="660" height="18" fill="#4F46E5"/>
+  <text x="360" y="45" text-anchor="middle" fill="white" font-size="15" font-weight="700" font-family="sans-serif">Agente-Ferramenta (Claude Code, OpenCode, Cursor Agent)</text>
+  <text x="360" y="75" text-anchor="middle" fill="#6366F1" font-size="11" font-family="sans-serif">Executa comandos · Lê/escreve arquivos · Git · Chama APIs via MCP</text>
+
+  <!-- Middle Box: Agente Customizado -->
+  <rect x="65" y="95" width="590" height="155" rx="10" fill="#FEF3C7" stroke="#D97706" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="65" y="95" width="590" height="32" rx="10" fill="#D97706"/>
+  <rect x="65" y="115" width="590" height="12" fill="#D97706"/>
+  <text x="360" y="117" text-anchor="middle" fill="white" font-size="14" font-weight="700" font-family="sans-serif">Agente Customizado: "Engenheiro de Software Sênior Python"</text>
+  <text x="360" y="148" text-anchor="middle" fill="#92400E" font-size="11" font-family="sans-serif">Definido por você: system prompt + regras + tools</text>
+
+  <!-- Skills -->
+  <rect x="100" y="168" width="160" height="55" rx="8" fill="white" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="180" y="192" text-anchor="middle" fill="#D97706" font-size="13" font-weight="700" font-family="sans-serif">🧪 Skill: Review</text>
+  <text x="180" y="211" text-anchor="middle" fill="#92400E" font-size="10" font-family="sans-serif">Code review com padrões</text>
+
+  <rect x="280" y="168" width="160" height="55" rx="8" fill="white" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="360" y="192" text-anchor="middle" fill="#D97706" font-size="13" font-weight="700" font-family="sans-serif">🛡️ Skill: Security</text>
+  <text x="360" y="211" text-anchor="middle" fill="#92400E" font-size="10" font-family="sans-serif">OWASP Top 10</text>
+
+  <rect x="460" y="168" width="160" height="55" rx="8" fill="white" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="540" y="192" text-anchor="middle" fill="#D97706" font-size="13" font-weight="700" font-family="sans-serif">📝 Skill: Test Writer</text>
+  <text x="540" y="211" text-anchor="middle" fill="#92400E" font-size="10" font-family="sans-serif">Testes unitários + integração</text>
+
+  <!-- Bottom labels -->
+  <text x="360" y="285" text-anchor="middle" fill="#4F46E5" font-size="12" font-weight="600" font-family="sans-serif">O QUE A FERRAMENTA FAZ</text>
+  <text x="360" y="305" text-anchor="middle" fill="#64748B" font-size="11" font-family="sans-serif">Ler arquivos, rodar comandos, interagir com git, acessar internet</text>
+
+  <text x="360" y="340" text-anchor="middle" fill="#D97706" font-size="12" font-weight="600" font-family="sans-serif">O QUE VOCÊ CONFIGURA</text>
+  <text x="360" y="360" text-anchor="middle" fill="#64748B" font-size="11" font-family="sans-serif">Personalidade do agente, regras de código, ferramentas disponíveis, fluxos de trabalho</text>
+
+  <!-- Legend -->
+  <rect x="540" y="290" width="12" height="12" rx="2" fill="#4F46E5"/>
+  <text x="558" y="301" fill="#64748B" font-size="10" font-family="sans-serif">Plataforma</text>
+  <rect x="630" y="290" width="12" height="12" rx="2" fill="#D97706"/>
+  <text x="648" y="301" fill="#64748B" font-size="10" font-family="sans-serif">Configuração</text>
+</svg>
