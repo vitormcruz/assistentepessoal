@@ -10,11 +10,10 @@ date: Junho 2026
 
 ---
 
-## Por que estamos aqui?
+## Objetivos
 
-- Muitos termos novos nos últimos 2 anos — ruído nas conversas
-- Objetivo: **vocabulário comum, zero ambiguidade**
-- Foco: desenvolvedores, nível intermediário, 30-45 min
+- Introduzir e alinhar conceitos novos da AIASE
+- Eliminar ruídos e ambiguidades
 
 **Agenda**
 
@@ -24,11 +23,12 @@ date: Junho 2026
 | 2 | Tokens e custos — a economia da IA |
 | 3 | Commands / Prompts — como falar com a IA |
 | 4 | Protocolo MCP — conectando a IA ao mundo |
-| 5 | Engenharia de contexto — o que a IA enxerga |
-| 6 | Agentes de IA — autonomia em ação |
-| 7 | Skills — módulos de conhecimento reutilizável |
-| 8 | Harness — o ambiente completo de execução |
-| 9 | RAG — busca + geração |
+| 5 | Protocolo A2A — agentes conversando entre si |
+| 6 | RAG — busca + geração |
+| 7 | Engenharia de contexto — o que a IA enxerga |
+| 8 | Agentes de IA — autonomia em ação |
+| 9 | Skills — módulos de conhecimento reutilizável |
+| 10 | Harness — o ambiente completo de execução |
 
 ---
 
@@ -55,7 +55,7 @@ texto e código.
 
 ## Principais LLMs para código (Jun/2026)
 
-| Modelo | Fornecedor | SWE-bench Verified | Custo (input/output 1M tokens) |
+| Modelo | Fornecedor | Acerto em bugs reais (SWE-bench) | Custo (input/output 1M tokens) |
 |--------|-----------|--------------------|--------------------------------|
 | Claude Opus 4.8 | Anthropic | 88,6% | $5 / $25 |
 | Claude Opus 4.7 | Anthropic | 87,6% | $5 / $25 |
@@ -65,6 +65,7 @@ texto e código.
 | Gemini 3.1 Pro | Google | 80,6% — multimodal, 1M contexto | $2 / $12 |
 
 Fontes: [1] [2] [3] [4] — ver slide de referências ao final.
+SWE-bench: % de bugs reais de GitHub resolvidos pelo agente de forma autônoma.
 
 **Modelos abertos (open-weight):**
 
@@ -262,22 +263,13 @@ Protocolo **aberto e padronizado** para conectar IAs a sistemas externos
 > um conector universal. Na metáfora do corpo: são os **braços, pernas
 > e sentidos** que permitem à IA interagir com o mundo externo.
 
----
-
-## MCP é o padrão da indústria
-
-Em 18 meses, o MCP passou de especificação a **padrão de fato** para
-integração de IA agentiva.
-
-**Evidências (2026):**
-
-- **Governança neutra:** Linux Foundation → Agentic AI Foundation (AAIF). Co-fundadores: Anthropic, Block, OpenAI. Membros platinum: AWS, Google, Microsoft, Cloudflare, Bloomberg [5]
-- **Suporte universal:** Claude, ChatGPT, Gemini, VS Code, Cursor, Copilot, Windsurf, Codex CLI [5] [6]
-- **Adoção empresarial:** 41% das organizações de software já em produção (Stacklok 2026) [6]. Casos documentados: Bloomberg, Amazon, Block, Figma, Supabase, Stripe [5] [7]
-- **Comunidade:** +97M downloads/mês, +10K servidores, trajetória de adoção mais rápida que React e gRPC [8]
+Em 18 meses, tornou-se o **padrão de fato** da indústria: governança
+neutra (AAIF, co-fundada por Anthropic, Block, OpenAI), suporte nativo
+em Claude, ChatGPT, Gemini, VS Code, Cursor, Copilot, e 41% das
+organizações de software já em produção (Stacklok 2026).
 
 > O MCP não é mais um conceito emergente — é a camada padrão para
-> sistemas de IA agentiva. (NeuralCoreTech, Maio 2026 [5])
+> sistemas de IA.
 
 ---
 
@@ -320,32 +312,103 @@ usá-la, e o servidor MCP executa com segurança no ambiente controlado.
 
 ---
 
-# 5. Engenharia de contexto
+# 5. A2A
+
+---
+
+## O que é o Agent-to-Agent Protocol?
+
+Protocolo **aberto** para comunicação entre agentes de IA — anunciado
+pelo Google em Abril/2025, ainda **emergente** e com adoção menor que o MCP.
+
+Enquanto o MCP conecta **agente ↔ ferramenta**, o A2A conecta
+**agente ↔ agente**. Um agente pode delegar tarefas a outro agente,
+mesmo que eles rodem em frameworks ou provedores diferentes.
+
+**Como funciona:**
+- Cada agente publica um **Agent Card** (cartão descritivo em JSON)
+- O card informa: capacidades, endpoints, formato de entrada/saída
+- Um agente descobre outro, lê o card e decide delegar uma subtarefa
+
+---
+
+# 6. RAG
+
+---
+
+## RAG — Retrieval-Augmented Generation
+
+Técnica que combina **busca em base de conhecimento + geração LLM.**
+Fundamenta respostas em dados reais, reduzindo alucinações.
+
+```
+Usuário pergunta → Busca documentos relevantes → Injeta no contexto → LLM responde
+```
+
+**Evolução do RAG:**
+
+| Geração | Período | Característica |
+|---------|---------|----------------|
+| Naive RAG | 2020-2023 | Busca simples (top-k) + geração |
+| Advanced RAG | 2023-2025 | Query rewriting, hybrid search, re-ranking |
+| Agentic RAG | 2025+ | O agente decide **se, quando e onde** buscar; auto-verifica resultado |
+
+**Exemplo Agentic RAG em 2026:**
+1. Usuário: "Qual a política de reembolso para clientes premium?"
+2. Agente avalia: preciso de informação externa → ativa busca
+3. Decide fonte: vector store de documentos internos (não web search)
+4. Recebe 5 chunks → avalia relevância → 2 são úteis, descarta 3
+5. Gera resposta com citações: "Conforme doc POL-2026-03, seção 4.2..."
+
+> RAG é o componente mais importante de engenharia de contexto para
+> sistemas que precisam de precisão factual.
+
+---
+
+# 7. Engenharia de contexto
 
 ---
 
 ## O que é engenharia de contexto?
 
-Disciplina de projetar **tudo que o modelo vê** em cada etapa da execução.
+Disciplina de fazer a **curadoria** de tudo que o modelo vê em cada etapa
+da execução.
 
 - Prompt engineering: otimiza **o que você diz**
 - Context engineering: otimiza **o que o modelo enxerga**
 
-**Os 5 componentes do contexto:**
-1. System prompt (instruções de base — fixo, cacheado)
-2. User input (a tarefa atual)
-3. Conversation history (memória da sessão — cresce a cada turno)
-4. Tool results (resultados de chamadas anteriores)
-5. Retrieved knowledge (documentos buscados via RAG)
+**Por que curadoria importa:** em agentes que executam dezenas de turnos,
+o prompt inicial é uma fração mínima do que o modelo processa. O resto é
+histórico de conversa, resultados de ferramentas e documentos — um volume
+de informação que cresce rápido e, se não for curado, degrada a qualidade.
 
-**A ideia central:** em agentes que executam dezenas de turnos, o prompt
-inicial é uma fração mínima do que o modelo processa. O que realmente
-determina a qualidade da resposta é **como você seleciona, organiza e
-comprime** esses 5 componentes antes de entregá-los ao modelo.
+**As 3 ações da curadoria de contexto:**
+
+| Ação | O que faz |
+|------|-----------|
+| **Selecionar** | Trazer só a informação relevante para a tarefa |
+| **Comprimir** | Reduzir o que é acessório sem perder o essencial |
+| **Isolar** | Separar contextos entre agentes especializados |
+
+> Prompt engineering é sobre o cardápio. Context engineering é sobre
+> os ingredientes que chegam à cozinha — e em que quantidade.
 
 ---
 
-# 6. Agentes de IA
+## Contexto na prática
+
+**Cenário:** agente precisa corrigir um bug na lógica de desconto em um
+repositório com 200 arquivos.
+
+![](imagens/contexto-comparacao.png)
+
+> A diferença não está no modelo nem no prompt — está na **curadoria
+> do contexto**: selecionar só o relevante, comprimir o acessório e
+> isolar o que cada agente realmente precisa ver.
+
+---
+
+# 8. Agentes de IA
 
 ---
 
@@ -369,7 +432,7 @@ elimina a principal fonte de ruído nas conversas.
 
 ## Os dois significados de "agente"
 
-| | Agente-Ferramenta (Tool Agent) | Agente Customizado (Prompt Agent) |
+| | Agente-Ferramenta (Tool Agent) | Agente Customizado |
 |---|------|------|
 | **O que é** | Software com acesso real ao sistema: lê arquivos, executa comandos, usa git, chama APIs | Um system prompt + skills + tools que roda **dentro** de um agente-ferramenta |
 | **Exemplos** | Claude Code, OpenCode, Cursor Agent, Codex CLI, Devin | "Agente Engenheiro de Software", "Agente de Code Review", "Agente de QA" |
@@ -389,7 +452,7 @@ O "Engenheiro de Software Sênior Python" é um **agente customizado**
 
 ---
 
-# 7. Skills
+# 9. Skills
 
 ---
 
@@ -455,7 +518,7 @@ System: [conteúdo completo de code-review/SKILL.md]
 
 ---
 
-# 8. Harness
+# 10. Harness
 
 ---
 
@@ -506,55 +569,15 @@ barreiras que transforma um LLM puro em um agente funcional e seguro.
 
 ---
 
-# 9. RAG
-
----
-
-## RAG — Retrieval-Augmented Generation
-
-Técnica que combina **busca em base de conhecimento + geração LLM.**
-Fundamenta respostas em dados reais, reduzindo alucinações.
-
-```
-Usuário pergunta → Busca documentos relevantes → Injeta no contexto → LLM responde
-```
-
-**Evolução do RAG:**
-
-| Geração | Período | Característica |
-|---------|---------|----------------|
-| Naive RAG | 2020-2023 | Busca simples (top-k) + geração |
-| Advanced RAG | 2023-2025 | Query rewriting, hybrid search, re-ranking |
-| Agentic RAG | 2025+ | O agente decide **se, quando e onde** buscar; auto-verifica resultado |
-
-**Exemplo Agentic RAG em 2026:**
-1. Usuário: "Qual a política de reembolso para clientes premium?"
-2. Agente avalia: preciso de informação externa → ativa busca
-3. Decide fonte: vector store de documentos internos (não web search)
-4. Recebe 5 chunks → avalia relevância → 2 são úteis, descarta 3
-5. Gera resposta com citações: "Conforme doc POL-2026-03, seção 4.2..."
-
-> RAG é o componente mais importante de engenharia de contexto para
-> sistemas que precisam de precisão factual.
-
----
-
 ![](imagens/hierarquia-ia.png)
 
 ---
 
-## Para lembrar
-
-1. **Modelos são commodities** — a diferença está no harness
-2. **MCP é o padrão da indústria** — adote, não crie conectores proprietários
-3. **Contexto > Prompt** — gerencie o que o modelo vê, não só o que você diz
-4. **Skills sob demanda** — catálogo no contexto, corpo só quando ativado
-5. **Hooks são segurança real** — prompt não é barreira de proteção
-6. **Agente customizado ≠ Agente-ferramenta** — um é config, o outro é plataforma
+## Obrigado! Perguntas?
 
 ---
 
-# Referências
+# Apêndice: Referências
 
 ## Preços de API (Junho 2026)
 
@@ -594,4 +617,4 @@ Usuário pergunta → Busca documentos relevantes → Injeta no contexto → LLM
 
 ---
 
-## Obrigado! Perguntas?
+
