@@ -40,34 +40,59 @@ date: Junho 2026
 ## O que é um LLM?
 
 **Large Language Model** — rede neural treinada sobre conjunto massivo de
-texto e código. 
+texto e código.
 
 - Entrada: texto (prompt) → Saída: texto (completion)
 - Funcionamento: predição de próximo token — **não é raciocínio consciente**
+
+| Confusão comum | Realidade |
+|----------------|-----------|
+| "A IA pensa" | Prevê tokens probabilisticamente; não há consciência |
+| "O modelo sabe tudo" | Sabe o que estava nos dados de treino até a data de corte |
+| "LLM = ChatGPT" | ChatGPT é produto; GPT é o modelo. Também existem Claude, Gemini, Llama, DeepSeek |
+| "Quanto maior, melhor" | Modelos menores e especializados em código frequentemente superam genéricos maiores |
 
 ---
 
 ## Principais LLMs para código (Jun/2026)
 
-| Modelo | Fornecedor | Destaque | Custo (input/output 1M tokens) |
-|--------|-----------|----------|--------------------------------|
-| Claude Opus 4.7 | Anthropic | SWE-bench 87,6% — líder em engenharia | $5 / $25 |
-| GPT-5.5 | OpenAI | Terminal-Bench 75,1% — tarefas agentivas | $5 / $30 |
-| Claude Sonnet 4.6 | Anthropic | Melhor custo-benefício frontier | $3 / $15 |
-| Gemini 3.1 Pro | Google | 1M contexto, multimodal | $2 / $12 |
-| DeepSeek V4 Pro | DeepSeek | MIT license, 75% mais barato | $0,43 / $0,87 |
+| Modelo | Fornecedor | SWE-bench Verified | Custo (input/output 1M tokens) |
+|--------|-----------|--------------------|--------------------------------|
+| Claude Opus 4.8 | Anthropic | 88,6% | $5 / $25 |
+| Claude Opus 4.7 | Anthropic | 87,6% | $5 / $25 |
+| GPT-5.5 | OpenAI | 82,6% | $5 / $30 |
+| Claude Sonnet 4.6 | Anthropic | 79,6% — melhor custo-benefício | $3 / $15 |
+| DeepSeek V4 Pro | DeepSeek | 80,6% — líder open-weight | $0,43 / $0,87 |
+| Gemini 3.1 Pro | Google | 80,6% — multimodal, 1M contexto | $2 / $12 |
+
+Fontes: [1] [2] [3] [4] — ver slide de referências ao final.
 
 **Modelos abertos (open-weight):**
 
 | Modelo | Destaque | Licença |
 |--------|----------|---------|
 | Qwen3-32B | Melhor open-weight para código | Apache 2.0 |
-| DeepSeek-Coder V3 | 236B MoE, frontier performance | MIT |
-| StarCoder 3 | Totalmente aberto (dados + código + pesos) | OpenRAIL |
 | Granite Code 34B | IBM, foco enterprise | Apache 2.0 |
+| StarCoder 3 | Totalmente aberto (dados + código + pesos) | OpenRAIL |
 
-> Gap aberto vs fechado no código bruto é pequeno. A diferença real está
-> na qualidade do **agente** (SWE-bench: ~65% aberto vs ~82% fechado).
+---
+
+## Modelos abertos vs fechados: onde está a diferença?
+
+Modelos abertos e fechados têm desempenho próximo em geração simples de
+funções (HumanEval: ~92% vs ~95%).
+
+A diferença real aparece quando falamos de **agentes autônomomos**
+resolvendo bugs em repositórios reais (SWE-bench Verified):
+
+| Cenário | SWE-bench |
+|---------|-----------|
+| Modelo open-weight + agente open-source básico | ~50-65% |
+| Modelo fechado + harness proprietário completo | ~80-88% |
+| Claude Opus 4.7 + Claude Code (harness Anthropic) | 87,6% |
+
+> O que faz diferença não é o modelo puro — é a **qualidade do harness**
+> que orquestra o agente, que o restringe e o direciona o modelo
 
 ---
 
@@ -89,7 +114,7 @@ Token é a **unidade atômica de processamento** de um LLM.
 
 **Por que importa:**
 - **Custo:** provedores cobram por token processado
-- **Janela de contexto:** limite máximo por requisição (200K a 1M tokens em 2026)
+- **Janela de contexto:** limite máximo por requisição (128K a 1M tokens em 2026)
 - **Qualidade:** excesso de contexto degrada respostas (efeito "lost in the middle")
 
 ---
@@ -97,25 +122,28 @@ Token é a **unidade atômica de processamento** de um LLM.
 ## Estrutura de custo
 
 - **Input tokens:** o que você envia (prompt, contexto, ferramentas)
-- **Output tokens:** o que o modelo gera — custa **3 a 5x mais** que input
+- **Output tokens:** o que o modelo gera — custa **3 a 6x mais** que input
 - **Prompt caching:** ~90% de desconto no input quando o prefixo não muda
 
 | Faixa | Exemplos | Input/1M tokens |
 |-------|----------|-----------------|
-| Ultra-baixo | GPT-5 Nano, Gemini Flash-Lite | $0,05 - $0,25 |
-| Produção | Claude Sonnet 4.6, GPT-5.4 | $2,50 - $3,00 |
-| Frontier | Claude Opus 4.7, GPT-5.5 | $5,00 - $10,00 |
+| Ultra-baixo | GPT-5 Nano ($0,05), Gemini Flash-Lite ($0,10) | $0,05 - $0,25 |
+| Produção | Claude Sonnet 4.6 ($3), GPT-5.4 ($2,50) | $2,50 - $3,00 |
+| Frontier | Claude Opus 4.7 ($5), GPT-5.5 ($5) | $5,00 |
 
-**Cenário:** agente resolve 1 bug (10 turnos, 50K contexto, 2K output/turno):
+Fontes: preços oficiais de Anthropic [1], OpenAI [3], Google [4].
 
-| Modelo | Custo/tarefa | Tarefas/$1 |
-|--------|-------------|------------|
-| Gemini 2.5 Flash | $0,07 | 14 |
-| Claude Sonnet 4.6 | $0,24 | 4 |
-| Claude Opus 4.7 | $0,40 | 2,5 |
+**Cenário simples:** 1 tarefa de código = 10K tokens input + 2K output:
 
-> **Regra prática:** modele o custo antes de escolher o modelo. O barato
-> resolve 80% do dia a dia; reserve o frontier para tarefas críticas.
+| Modelo | Sem cache | Com prompt caching (90%) |
+|--------|-----------|--------------------------|
+| Gemini 2.5 Flash ($0,30/$2,50) | $0,008 | ~$0,002 |
+| Claude Sonnet 4.6 ($3/$15) | $0,06 | ~$0,015 |
+| Claude Opus 4.7 ($5/$25) | $0,10 | ~$0,055 |
+| GPT-5.5 ($5/$30) | $0,11 | ~$0,06 |
+
+> Cache reduz o custo em ~80-90%. Projete o prefixo do contexto para ser
+> estável e aproveite esse desconto.
 
 ---
 
@@ -125,47 +153,76 @@ Token é a **unidade atômica de processamento** de um LLM.
 
 ## O que é um prompt?
 
-**Prompt** é a instrução textual enviada ao LLM para guiar sua resposta.
-Não é só "uma pergunta" — é um artefato que define papéis, regras e restrições.
+**Prompt** é tudo que você envia ao LLM para guiar sua resposta.
+Não é só "uma pergunta" — é um artefato de engenharia com múltiplos
+componentes.
 
-Componentes:
-- **System prompt:** papel, tom, comportamento esperado
-- **User prompt:** a tarefa ou pergunta específica
-- **Tool definitions:** esquema JSON das ferramentas disponíveis
-- **Conversation history:** histórico de mensagens anteriores
+Os **4 componentes** de uma chamada ao modelo:
 
-**Prompt ≠ Command**
-
-| Prompt | Command |
-|--------|---------|
-| Instrução livre em linguagem natural | Atalho predefinido, comportamento conhecido |
-| "Explique o que esse código faz e sugira melhorias" | `/review` — dispara fluxo de code review |
-| Cada uso pode ser diferente | Sempre faz a mesma coisa |
-
-> Commands são prompts **empacotados e reutilizáveis** — economizam tempo
-> e garantem consistência.
+| Componente | O que é | Quem define |
+|------------|---------|-------------|
+| System prompt | Papel, tom, regras, restrições de comportamento | O harness (AGENTS.md, config) |
+| User prompt | A tarefa ou pergunta específica | O desenvolvedor |
+| Tool definitions | Esquema JSON das ferramentas disponíveis | MCP + código do agente |
+| Conversation history | Histórico de mensagens anteriores | Automático (acumulado a cada turno) |
 
 ---
 
-## Técnicas de prompting e evolução
+## System prompt — exemplo real
 
-**Técnicas fundamentais (ainda válidas em 2026):**
+Define **quem** o modelo é e **como** deve se comportar.
+Injetado pelo harness, não pelo usuário.
 
-| Técnica | Quando usar |
-|---------|-------------|
-| Zero-shot | Tarefa direta: "Traduza este código para Python" |
-| Few-shot | Forneça 2-3 exemplos de entrada/saída esperada |
-| Chain of Thought | "Pense passo a passo antes de responder" |
-| ReAct | "Raciocine, depois aja com uma ferramenta" — padrão agentivo |
-| Formato estruturado | "Retorne JSON com campos: summary, risk, recommendation" |
+```
+Você é um engenheiro de software sênior especializado em Python.
+Regras:
+- Use type hints em todas as funções
+- Prefira dataclasses a dicionários
+- Testes com pytest, cobertura mínima de 80%
+- Nunca use `except Exception` genérico
+- Explique mudanças não-triviais com comentários concisos
+```
 
-**Evolução do foco da engenharia de IA:**
+> O system prompt é fixo e cacheado — trocá-lo a cada chamada
+> quebra o cache e aumenta o custo em até 10x.
 
-- **Prompt Engineering (2022-2024):** "O que devo dizer?"
-- **Context Engineering (2025):** "Qual informação devo fornecer?"
-- **Harness Engineering (2026):** "Qual sistema devo construir?"
+---
 
-> Prompt não morreu — foi **absorvido** como submódulo do harness.
+## User prompt + Histórico — exemplo real
+
+**User prompt** — a tarefa enviada a cada turno:
+
+```
+Refatore o módulo `payment.py`: extraia a lógica de validação
+de cartão para uma função separada `validate_card()`. Mantenha
+os testes existentes passando.
+```
+
+**Conversation history** — acumulado automaticamente:
+
+```
+Turno 1: User: "Liste os arquivos do módulo de pagamento"
+         Assistant: "Encontrei: payment.py, payment_test.py, gateway.py"
+Turno 2: User: "Refatore o módulo payment.py..."
+         Assistant: [resposta atual]
+```
+
+> Em agentes de 50+ turnos, o histórico é o maior consumidor da janela
+> de contexto. É aqui que entra a operação **Compress** (seção 5).
+
+---
+
+## Prompt ≠ Command
+
+| Prompt | Command |
+|--------|---------|
+| Instrução livre em linguagem natural | Atalho predefinido com comportamento conhecido |
+| "Explique o que esse código faz e sugira melhorias" | `/review` — dispara fluxo de code review |
+| Cada uso pode ser diferente | Sempre faz a mesma coisa |
+| Ex: mensagem no chat | Ex: `/fix`, `/test`, `/explain`, `/deploy` |
+
+> Commands são prompts **empacotados e reutilizáveis** — economizam tempo
+> e garantem consistência. Quem define os commands disponíveis é o harness.
 
 ---
 
@@ -179,8 +236,8 @@ Protocolo **aberto e padronizado** para conectar IAs a sistemas externos
 (dados, APIs, ferramentas).
 
 - Criado pela Anthropic (Nov/2024), doado à **Linux Foundation** (Dez/2025)
-- +97M downloads/mês, +10.000 servidores públicos
-- Suportado por Claude, ChatGPT, Gemini, VS Code, Cursor, Copilot
+- +97M downloads mensais nos SDKs Python e TypeScript
+- +10.000 servidores públicos no registry oficial
 
 > **Analogia:** MCP está para IA como **USB-C** para dispositivos —
 > um conector universal. Na metáfora do corpo: são os **braços, pernas
@@ -188,25 +245,36 @@ Protocolo **aberto e padronizado** para conectar IAs a sistemas externos
 
 ---
 
-## O problema N×M e arquitetura
+## MCP é o padrão da indústria
 
-**Antes do MCP:** 5 modelos × 10 sistemas = **50 conectores customizados**
+Em 18 meses, o MCP passou de especificação a **padrão de fato** para
+integração de IA agentiva.
 
-**Com MCP:** 1 servidor por sistema, compatível com todos os modelos = **10 integrações**
+**Evidências (2026):**
 
+- **Governança neutra:** Linux Foundation → Agentic AI Foundation (AAIF). Co-fundadores: Anthropic, Block, OpenAI. Membros platinum: AWS, Google, Microsoft, Cloudflare, Bloomberg [5]
+- **Suporte universal:** Claude, ChatGPT, Gemini, VS Code, Cursor, Copilot, Windsurf, Codex CLI [5] [6]
+- **Adoção empresarial:** 41% das organizações de software já em produção (Stacklok 2026) [6]. Casos documentados: Bloomberg, Amazon, Block, Figma, Supabase, Stripe [5] [7]
+- **Comunidade:** +97M downloads/mês, +10K servidores, trajetória de adoção mais rápida que React e gRPC [8]
+
+> "MCP is no longer an emerging concept — it is the standard layer for
+> agentic AI systems." — NeuralCoreTech, Maio 2026 [5]
+
+---
+
+## O problema N×M resolvido
+
+| Antes do MCP | Com MCP |
+|--------------|---------|
+| 5 modelos × 10 sistemas = **50 conectores** | 1 servidor por sistema = **10 servidores** |
+| Código específico por par modelo-sistema | Compatível com qualquer modelo |
+| Manutenção N×M | Manutenção 1 por sistema |
+
+**Arquitetura:**
 ```
-  MCP Client (Claude, ChatGPT, VS Code)
-      ↕  JSON-RPC: resources, tools, prompts
-  MCP Server (banco de dados, API, sistema de arquivos)
+MCP Client (Claude, ChatGPT, VS Code)  ←→  JSON-RPC  ←→  MCP Server (banco, API)
 ```
-
-**O que mudou em 2026 (release candidate 2026-07-28):**
-- Protocolo **stateless** (sem sessões persistentes)
-- **MCP Apps:** interfaces HTML interativas dentro do chat
-- **Tasks:** operações long-running com acompanhamento
-- **OAuth 2.0 / OpenID Connect** como padrão de autorização
-
-> MCP não é mais experimento — é o **padrão de integração** para IA agentiva.
+Transportes: stdio (local) ou Streamable HTTP (remoto, produção).
 
 ---
 
@@ -219,17 +287,19 @@ Expõe ferramentas: `query`, `list_tables`, `describe_table`
 ```
 Você: "Quantos usuários ativos temos esse mês?"
 
-Agente chama: query("SELECT COUNT(*) FROM users WHERE active = true")
-      ↓
-MCP Server executa no PostgreSQL
-      ↓
+O agente recebe as tools no contexto e decide chamar:
+  → query("SELECT COUNT(*) FROM users WHERE active = true")
+
+O MCP Server executa no PostgreSQL (com as credenciais e
+permissões definidas por você, não pelo agente)
+
 Retorna: [{count: 15420}]
-      ↓
+
 Agente: "Temos 15.420 usuários ativos este mês."
 ```
 
-O agente não "sabe SQL magicamente" — ele recebe a ferramenta, decide usá-la,
-e o servidor MCP executa com segurança no ambiente controlado.
+O agente não "sabe SQL" — ele recebe a ferramenta como opção, decide
+usá-la, e o servidor MCP executa com segurança no ambiente controlado.
 
 ---
 
@@ -245,40 +315,40 @@ Disciplina de projetar **tudo que o modelo vê** em cada etapa da execução.
 - Context engineering: otimiza **o que o modelo enxerga**
 
 **Os 5 componentes do contexto:**
-1. System prompt (instruções de base)
-2. User input (tarefa atual)
-3. Conversation history (memória da sessão)
+1. System prompt (instruções de base — fixo, cacheado)
+2. User input (a tarefa atual)
+3. Conversation history (memória da sessão — cresce a cada turno)
 4. Tool results (resultados de chamadas anteriores)
-5. Retrieved knowledge (documentos do RAG)
-
-**As 4 operações do contexto (LangChain):**
-
-| Operação | O que faz | Exemplo |
-|----------|-----------|---------|
-| Write | Salvar para depois | Sumário da conversa em memória |
-| Select | Puxar na hora certa | Buscar docs relevantes via RAG |
-| Compress | Reduzir mantendo essência | Resumir histórico antigo |
-| Isolate | Separar entre agentes | Sub-agente recebe só o que precisa |
+5. Retrieved knowledge (documentos buscados via RAG)
 
 ---
 
-## Contexto vs Prompt na prática
+## As 4 operações do contexto
 
-**Por que contexto > prompt em 2026:**
-- Janelas de **1M tokens** — carregar muito é fácil, carregar **bem** é o desafio
-- Agentes de 50+ turnos: o prompt inicial é <5% do que o modelo vê
-- **Lost in the middle:** informação no meio da janela longa é ignorada
-- **Prompt caching** torna barato ter contexto estável grande
+Definidas por LangChain como o framework mental da disciplina:
 
-**Exemplo: agente analisa PR de 200 arquivos**
+| Operação | O que faz | Exemplo real |
+|----------|-----------|--------------|
+| **Write** | Persistir para uso futuro | Salvar sumário da conversa em memória entre sessões |
+| **Select** | Buscar a informação certa na hora certa | RAG: buscar docs relevantes, não tudo |
+| **Compress** | Reduzir tokens mantendo o essencial | Resumir histórico antigo da conversa em 3 linhas |
+| **Isolate** | Separar contexto entre agentes | Sub-agente de segurança não precisa ver o histórico de UI |
 
-| Abordagem | Método | Resultado |
-|-----------|--------|-----------|
-| Só prompt | "Analise este PR" + dump dos 200 arquivos | Lost in the middle, análise superficial |
-| Com contexto | Select (só diffs) → Compress (resume configs) → Isolate (sub-agente segurança, outro estilo) | Análise profunda e organizada |
+---
 
-> A qualidade do agente depende mais da **gestão do contexto** do que da
-> redação do prompt inicial.
+## Exemplo prático: contexto bem vs mal projetado
+
+**Cenário:** agente precisa corrigir um bug de regra de negócio em um
+repositório com 500 arquivos.
+
+| Abordagem | O que o agente recebe | Resultado |
+|-----------|-----------------------|-----------|
+| Ruim (só prompt) | "Corrija o bug na validação de desconto" + dump de 500 arquivos no contexto + 30 tools | Informação relevante se perde no meio da janela; agente alucina solução |
+| Boa (com contexto) | **Select:** grep por "desconto", traz 8 arquivos. **Compress:** resume código não relacionado ao bug. **Isolate:** sub-agente foca só na lógica, outro cuida dos testes | Agente tem 8 arquivos relevantes + resumo do resto + ferramentas filtradas; resolve corretamente |
+
+> A diferença entre as duas abordagens não está no modelo nem no prompt —
+> está no **pipeline de contexto** que seleciona, comprime e isola
+> a informação antes de entregar ao modelo.
 
 ---
 
@@ -288,48 +358,59 @@ Disciplina de projetar **tudo que o modelo vê** em cada etapa da execução.
 
 ## O que é um agente?
 
-Sistema onde um LLM decide autonomamente o que fazer em seguida —
-chamando ferramentas — até atingir um objetivo.
+Um **agente** é um sistema onde um LLM decide autonomamente o que fazer
+em seguida — chamando ferramentas — até atingir um objetivo.
 
 ```
 Loop do agente (ReAct):
-  Observar → Raciocinar → Agir (tool call) → Observar → ...
+  Observar resultado → Raciocinar sobre próximo passo → Agir (tool call) → ...
   Até: objetivo atingido ou condição de parada
 ```
 
-**Ferramenta vs Agente vs Agente Customizado**
+**A distinção que causa confusão:**
 
-| Conceito | Definição | Exemplo |
-|----------|-----------|---------|
-| Ferramenta | Função que o LLM pode chamar | `web_search(query)`, `read_file(path)` |
-| Agente | LLM + ferramentas + loop de decisão | Claude Code, ChatGPT com tools |
-| Agente Customizado | Agente com ferramentas, regras e fluxos do seu domínio | Agente de code review com acesso ao seu repo e regras internas |
-
-> **Ferramenta ≠ Agente.** Ferramenta é um bloco. Agente é o sistema que
-> decide **quando e como** usar cada ferramenta.
+A palavra "agente" é usada para **duas coisas diferentes**. Entender isso
+elimina a principal fonte de ruído nas conversas.
 
 ---
 
-## Tipos e modos de agentes
+## Os dois significados de "agente"
 
-**Classificação por função (2026):**
+| | Agente-Ferramenta (Tool Agent) | Agente Customizado (Prompt Agent) |
+|---|------|------|
+| **O que é** | Software com acesso real ao sistema: lê arquivos, executa comandos, usa git, chama APIs | Um system prompt + skills + tools que roda **dentro** de um agente-ferramenta |
+| **Exemplos** | Claude Code, OpenCode, Cursor Agent, Codex CLI, Devin | "Agente Engenheiro de Software", "Agente de Code Review", "Agente de QA" |
+| **Quem define** | O provedor da ferramenta (Anthropic, OpenAI, etc.) | **Você**, via configuração (AGENTS.md, skills, tools) |
+| **O que faz** | Gerencia o loop, executa comandos reais, persiste sessão | Define personalidade, escopo de conhecimento, regras de atuação |
+| **Analogia** | O **computador** e seu sistema operacional | O **programa** que roda nesse computador |
 
-| Tipo | O que faz | Exemplos |
-|------|-----------|----------|
-| Coding Agent | Escreve, depura, refatora, implanta | Claude Code, Cursor Agent, Codex CLI |
-| Research Agent | Pesquisa multi-etapas, síntese | OpenAI Deep Research, Perplexity Pro |
-| Computer-Use | Controla navegador, preenche formulários | Anthropic Computer Use |
-| Multi-Agent | Coordena agentes especializados | CrewAI, AutoGen, LangGraph |
+---
 
-**Copilot vs Autopilot**
+## Exemplo concreto da distinção
 
-| Modo | Comportamento | Exemplos |
-|------|---------------|----------|
-| Copilot | Aumenta o dev — sugere, completa | GitHub Copilot, Cursor Tab |
-| Autopilot | Age sozinho — planeja, executa, entrega PR | Claude Code, Devin, Codex Cloud |
+```
+┌─────────────────────────────────────────────┐
+│ Agente-Ferramenta: Claude Code               │
+│  (executa comandos, lê/escreve arquivos,     │
+│   gerencia git, chama APIs via MCP)          │
+│                                              │
+│  ┌──────────────────────────────────────┐   │
+│  │ Agente Customizado: "Engenheiro de    │   │
+│  │ Software Sênior Python"               │   │
+│  │ (system prompt + skills + regras)     │   │
+│  │                                      │   │
+│  │  ┌────────────────────────────┐     │   │
+│  │  │ Skill: Code Review          │     │   │
+│  │  │ Skill: Test Writer          │     │   │
+│  │  │ Skill: Security Audit       │     │   │
+│  │  └────────────────────────────┘     │   │
+│  └──────────────────────────────────────┘   │
+└─────────────────────────────────────────────┘
+```
 
-> Maioria dos devs em 2026 usa **dois agentes**: copilot no IDE + autônomo
-> no terminal para tarefas complexas.
+O OpenCode/ClaudeCode é o **agente-ferramenta** (a plataforma).
+O "Engenheiro de Software Sênior Python" é um **agente customizado**
+(a configuração que roda nessa plataforma).
 
 ---
 
@@ -345,44 +426,57 @@ sob demanda pelo agente.
 | Ferramenta | Skill |
 |------------|-------|
 | Função atômica: `search_db(query)` | Fluxo completo: pesquisar → sumarizar → apresentar |
-| Sempre no contexto | Carregada só quando necessária |
+| Sempre listada nas tools disponíveis | Corpo carregado só quando ativada |
 
-> Ferramentas são **funções**. Skills são **módulos** compostos de múltiplas
-> funções e conhecimento de domínio.
-
-**Progressive Disclosure (divulgação progressiva):**
-- Prefixo estável: catálogo (nome + 1 linha de descrição)
-- Sufixo variável: definição completa, carregada só quando ativada
-
-Isso mantém o KV-cache válido e reduz desperdício de tokens com skills
-que não serão usadas na tarefa.
+> Ferramentas são **funções**. Skills são **módulos** compostos de
+> múltiplas funções e conhecimento de domínio.
 
 ---
 
-## Estrutura e exemplo
+## Como o mecanismo de Skills funciona
+
+O que o agente **sempre** vê no contexto (catálogo):
 
 ```
-skills/
-  code-review/
-    SKILL.md          ← Instruções (carregado sob demanda)
-    examples/
-      good-review.md
-      bad-review.md
+Skills disponíveis:
+  code-review — Revisa PRs aplicando padrões da empresa
+  deploy-check — Verifica pré-requisitos de deploy
+  security-audit — Analisa vulnerabilidades OWASP Top 10
 ```
 
-**SKILL.md** contém: gatilhos de ativação, passo a passo, regras,
-critérios de qualidade, ferramentas específicas, exemplos.
+Apenas o **nome + descrição de 1 linha** de cada skill consome tokens
+do contexto. O corpo (SKILL.md) **não está no contexto ainda.**
 
-**Exemplo — Catálogo (prefixo estável):**
-> `code-review` — Revisa PRs aplicando padrões da empresa: segurança,
-> cobertura de testes, style guide.
+Quando o agente decide que precisa de uma skill, o harness carrega o
+arquivo `SKILL.md` completo e injeta no contexto como mensagem do sistema.
 
-**SKILL.md (carregado quando ativado):**
-1. Leia o diff completo
-2. Classifique: segurança, lógica, estilo, performance
-3. Aplique checklist por categoria
-4. Relatório com severity (CRITICAL/HIGH/MEDIUM/LOW)
-5. Sugira correções com exemplos de código
+---
+
+## Exemplo de ativação de Skill
+
+**Antes da ativação** (contexto do agente):
+
+```
+System: Você é um engenheiro de software sênior.
+Tools: bash, read_file, write_file, search_code...
+Skills: code-review (Revisa PRs...), security-audit (OWASP...)
+User: Revise o PR #342
+```
+
+**O agente raciocina:** "Preciso revisar um PR → skill `code-review`"
+
+**Depois da ativação** (SKILL.md injetado no contexto):
+
+```
+System: [conteúdo completo de code-review/SKILL.md]
+  Passo 1: Leia o diff do PR
+  Passo 2: Classifique mudanças por categoria (segurança, lógica, estilo)
+  ...
+```
+
+> Isso se chama **Progressive Disclosure** (divulgação progressiva):
+> o prefixo estável (catálogo) não muda → KV-cache preservado.
+> O corpo da skill só ocupa tokens quando realmente necessário.
 
 ---
 
@@ -394,39 +488,43 @@ critérios de qualidade, ferramentas específicas, exemplos.
 
 > **Agente = Modelo + Harness**
 
-O harness é o ambiente de execução que transforma um LLM puro em um agente
-funcional. É **tudo que envolve o modelo.**
+**Analogia do arreio (harness = arreio de cavalo):**
 
-**As 5 peças:**
+Um cavalo (LLM) tem força bruta, mas sem arreio (harness) você não
+controla para onde ele vai, o que ele carrega, nem como ele para.
 
-| Componente | Função | Exemplo |
-|------------|--------|---------|
-| **AGENTS.md** | Regras do projeto, convenções, comandos | "Use tabs. Testes: pytest. Não mexer em /infra." |
-| **Skills** | Conhecimento reutilizável sob demanda | Code review, deploy, migração de DB |
-| **MCP** | Conexão com sistemas externos | Servidor MCP do banco, da API interna |
-| **Hooks** | Scripts que disparam em eventos | PreToolUse: validar antes de executar |
-| **Sub-agentes** | Delegação para especialistas | Segurança, testes, documentação |
+O **harness** é o conjunto completo de rédeas, guias, sensores e
+barreiras que transforma um LLM puro em um agente funcional e seguro.
+
+**Os 5 componentes do arreio:**
+
+| Peça do arreio | Função | Exemplo no código |
+|----------------|--------|-------------------|
+| **AGENTS.md** (rédea) | Direciona o comportamento | "Use tabs. Testes: pytest. Não mexer em /infra." |
+| **Skills** (bagagem) | Conhecimento carregado sob demanda | Code review, deploy, migração de DB |
+| **MCP** (conexões) | Liga o cavalo ao mundo externo | Servidor MCP do banco, da API interna |
+| **Hooks** (freio) | Bloqueiam ações perigosas | PreToolUse: "não execute rm -rf" |
+| **Sub-agentes** (cavalos especializados) | Dividem a carga | Um para segurança, outro para testes, outro para docs |
 
 ---
 
-## Por que Harness é a camada certa?
+## Por que Harness é a camada que importa?
 
-- Mesmo modelo produz resultados **10x diferentes** conforme o harness
+- O mesmo modelo (ex: Claude Sonnet 4.6) produz resultados **10x diferentes** dependendo do harness
 - Modelos são commodities — **a diferenciação está no ambiente**
 - Resolve o que prompts sozinhos não resolvem:
-  - **Segurança:** hooks bloqueiam ações perigosas (impossível burlar por prompt)
+  - **Segurança:** hooks bloqueiam ações perigosas (prompts podem ser ignorados; hooks, não)
   - **Consistência:** skills garantem o mesmo padrão sempre
   - **Escala:** sub-agentes paralelizam o trabalho
 
-**AGENTS.md — o ponto de partida:**
-- Arquivo na raiz do repo, injetado no system prompt
+**AGENTS.md — a rédea:**
+- Arquivo na raiz do repo, injetado deterministicamente no system prompt
 - Máximo 300 linhas (ideal <60)
-- O que o agente DEVE e NÃO DEVE fazer
-- Comandos de build, teste, lint. Critérios de conclusão
+- O que o agente DEVE e NÃO DEVE fazer, comandos de build/test, critérios de conclusão
 
-**Hooks — controle obrigatório:**
-- `PreToolUse` — bloqueia ação perigosa (exit code 2)
-- `PostToolUse` — valida output
+**Hooks — o freio:**
+- `PreToolUse`: validar antes de executar (exit code 2 = bloquear)
+- `PostToolUse`: verificar output depois de executar
 - Exemplo: hook que bloqueia `rm -rf /` ou `DROP TABLE` em produção
 
 ---
@@ -441,7 +539,7 @@ Técnica que combina **busca em base de conhecimento + geração LLM.**
 Fundamenta respostas em dados reais, reduzindo alucinações.
 
 ```
-Usuário pergunta → Busca documentos relevantes → Injeta no contexto → LLM responde com fatos
+Usuário pergunta → Busca documentos relevantes → Injeta no contexto → LLM responde
 ```
 
 **Evolução do RAG:**
@@ -452,14 +550,66 @@ Usuário pergunta → Busca documentos relevantes → Injeta no contexto → LLM
 | Advanced RAG | 2023-2025 | Query rewriting, hybrid search, re-ranking |
 | Agentic RAG | 2025+ | O agente decide **se, quando e onde** buscar; auto-verifica resultado |
 
-**Padrão típico em 2026:**
-- Agente avalia se precisa de informação externa
-- Decide entre: vector store, knowledge graph, web search, API
-- Avalia qualidade do resultado e re-busca se necessário
-- Auto-verifica a resposta gerada antes de entregar
+**Exemplo Agentic RAG em 2026:**
+1. Usuário: "Qual a política de reembolso para clientes premium?"
+2. Agente avalia: preciso de informação externa → ativa busca
+3. Decide fonte: vector store de documentos internos (não web search)
+4. Recebe 5 chunks → avalia relevância → 2 são úteis, descarta 3
+5. Gera resposta com citações: "Conforme doc POL-2026-03, seção 4.2..."
 
 > RAG é o componente mais importante de engenharia de contexto para
 > sistemas que precisam de precisão factual.
+
+---
+
+## Para lembrar
+
+1. **Modelos são commodities** — a diferença está no harness
+2. **MCP é o padrão da indústria** — adote, não crie conectores proprietários
+3. **Contexto > Prompt** — gerencie o que o modelo vê, não só o que você diz
+4. **Skills sob demanda** — catálogo no contexto, corpo só quando ativado
+5. **Hooks são segurança real** — prompt não é barreira de proteção
+6. **Agente customizado ≠ Agente-ferramenta** — um é config, o outro é plataforma
+
+---
+
+# Referências
+
+## Preços de API (Junho 2026)
+
+[1] **Anthropic API Pricing.** https://platform.claude.com/docs/en/about-claude/pricing
+    - Claude Opus 4.7: $5/$25. Sonnet 4.6: $3/$15. Haiku 4.5: $1/$5.
+
+[2] **OpenAI API Pricing.** https://openai.com/api/pricing/
+    - GPT-5.5: $5/$30. GPT-5.4: $2.50/$15.
+
+[3] **DeepSeek API Pricing.** https://api-docs.deepseek.com/quick_start/pricing
+    - V4 Pro: $0.435/$0.87 (promo permanente desde Mai/2026). V4 Flash: $0.14/$0.28.
+
+[4] **Google Gemini Pricing.** https://ai.google.dev/pricing
+    - Gemini 2.5 Flash: $0.30/$2.50. Gemini 3.1 Pro: $2/$12.
+
+## SWE-bench Verified (Junho 2026)
+
+[5] **SWE-bench Verified Leaderboard.** https://www.swebench.com/verified
+[6] **Steel.dev Leaderboard.** https://leaderboard.steel.dev/leaderboards/swe-bench-verified/
+[7] **BenchLM.ai.** https://benchlm.ai/benchmarks/sweVerified
+[8] **Vals.ai.** https://vals.ai/benchmarks/swebench
+
+## MCP — Protocolo e adoção
+
+[9] **Anthropic — Donating MCP to AAIF (Dez/2025).** https://www.anthropic.com/news/donating-the-model-context-protocol
+[10] **NeuralCoreTech — "Why MCP Became the Standard" (Mai/2026).** https://neuralcoretech.com/model-context-protocol-mcp-2026-agentic-ai-standard/
+[11] **AgentMarketCap — "MCP at 17 Months" (Abr/2026).** https://agentmarketcap.ai/blog/2026/04/23/mcp-17-month-anniversary-10k-servers-97m-downloads-category-standard
+[12] **Digital Applied — "MCP Ecosystem H1 2026 Retrospective" (Mai/2026).** https://www.digitalapplied.com/blog/mcp-ecosystem-h1-2026-retrospective-adoption-data-points
+[13] **MCP Blog — "2026-07-28 Release Candidate" (Mai/2026).** https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/
+
+## Harness, contexto e agentes
+
+[14] **amux — "Harness Engineering Guide" (Mai/2026).** https://amux.io/guides/harness-engineering/
+[15] **HumanLayer — "Skill Issue: Harness Engineering" (Mar/2026).** https://www.humanlayer.dev/blog/skill-issue-harness-engineering-for-coding-agents
+[16] **ArXiv — "Building AI Coding Agents for the Terminal" (Mar/2026).** https://arxiv.org/html/2603.05344v1
+[17] **ypollak2 — "Context Engineering Handbook" (Mar/2026).** https://github.com/ypollak2/context-engineering-handbook
 
 ---
 
