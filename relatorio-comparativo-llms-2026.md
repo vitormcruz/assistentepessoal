@@ -212,6 +212,89 @@ Modelos nesta categoria sao os melhores "executores" em um fluxo de trabalho ser
 
 ---
 
+## Recomendacoes por faixa de custo
+
+As faixas abaixo derivam da contagem estimada de requisicoes mensais disponiveis por modelo em planos de uso tipicos (ex.: OpenCode Go). **Quanto menor a quantidade de requisicoes, mais caro o modelo por chamada.** Cada faixa agrupa modelos de custo similar para que voce escolha o melhor dentro da sua realidade de gasto.
+
+### Faixa Premium (4.300 a 5.750 req/mes) — maior custo por chamada
+
+**Modelos disponiveis:** GLM-5.1 (880 req/5h), Qwen3.7 Max (950 req/5h), GLM-5 (1.150 req/5h), Kimi K2.6 (1.150 req/5h)
+
+| Caso de uso | Melhor escolha | Alternativa | Justificativa |
+| --- | --- | --- | --- |
+| Busca e coleta de conteudo | **Qwen3.7 Max** (4.770/mes) | GLM-5.1 (4.300/mes) | Qwen: score 92, reasoning 96, multilingual 87, 1M contexto — melhor absoluto da faixa. GLM-5.1: knowledge 85, IF 92, MIT — melhor open-weight. |
+| Discussao sobre temas variados | **Qwen3.7 Max** (4.770/mes) | GLM-5.1 (4.300/mes) | Qwen: score 92, Elo ~1475, domina reasoning e analise profunda. GLM-5.1: Elo 1472, knowledge 85, conhecimento enciclopedico. |
+| Planejamento de codificacao | **Qwen3.7 Max** (4.770/mes) | GLM-5.1 (4.300/mes) | Qwen: reasoning 96, 1M contexto — analisa codebases inteiras. GLM-5.1: IF 92, knowledge 85 — segue requisitos com precisao. |
+| Orquestracao de agentes | **Kimi K2.6** (5.750/mes) | GLM-5.1 (4.300/mes) | Kimi: swarm sampling nativo com ate 300 sub-agentes paralelos, coding 89, agentic 87. GLM-5.1: IF 92 — confiavel para coordenacao estruturada. |
+| Agente codificador (workflow) | **Kimi K2.6** (5.750/mes) | GLM-5.1 (4.300/mes) | Kimi: coding 89, agentic 87. GLM-5.1: coding 84, IF 92 — precisao em instrucoes e critico em pipelines seriais. |
+| Codificacao local (terminal) | — ⚠️ | Qwen3.7 Max (4.770/mes, API) | Nenhum modelo da faixa e viavel para self-host (todos exigem 8x H100+). Qwen3.7 Max via API e a melhor opcao remota. |
+
+> ⚠️ Self-host na faixa Premium: Kimi K2.6 (~1TB VRAM), GLM-5.1 (~744GB VRAM) e GLM-5 (~744GB VRAM) exigem infraestrutura de datacenter com 8x H100 80GB. Apenas viaveis como API.
+
+---
+
+### Faixa Alta (9.250 a 17.150 req/mes) — custo intermediario-alto
+
+**Modelos disponiveis:** Kimi K2.5 (1.850 req/5h), MiMo-V2.5-Pro (3.250 req/5h), Qwen3.6 Plus (3.300 req/5h), MiniMax M2.7 (3.400 req/5h), DeepSeek V4 Pro (3.450 req/5h)
+
+| Caso de uso | Melhor escolha | Alternativa | Justificativa |
+| --- | --- | --- | --- |
+| Busca e coleta de conteudo | **DeepSeek V4 Pro** (17.150/mes) | Qwen3.6 Plus (16.300/mes) | DSv4: score 87, agentic 89, 1M contexto, MIT. Qwen3.6: multilingual 85, IF 88, 1M contexto — mais barato dentro da faixa. |
+| Discussao sobre temas variados | **DeepSeek V4 Pro** (17.150/mes) | MiMo-V2.5-Pro (16.300/mes) | DSv4: score 87, Elo 1462. MiMo: Elo 1465, multimodal, 40-60% menos tokens — ideal para dialogos longos com anexos. |
+| Planejamento de codificacao | **DeepSeek V4 Pro** (17.150/mes) | Qwen3.6 Plus (16.300/mes) | DSv4: coding 90, agentic 89, 1M contexto, MIT — melhor executor da faixa. Qwen3.6: 1M contexto — quando o tamanho do codebase e o fator limitante. |
+| Orquestracao de agentes | **MiniMax M2.7** (17.000/mes) | DeepSeek V4 Pro (17.150/mes) | MiniMax: Agent Teams nativo, Elo 1495 GDPval-AA (mais alto entre open-weight), SWE-Pro 56.22%. DSv4: agentic 89 — executor forte para delegacao. |
+| Agente codificador (workflow) | **MiMo-V2.5-Pro** (16.300/mes) | DeepSeek V4 Pro (17.150/mes) | MiMo: usa 40-60% menos tokens por trajetoria (70K vs 140K+) — reducao de custo dramatica em pipelines longos. DSv4: coding 90 — melhor qualidade pura. |
+| Codificacao local (terminal) | **MiniMax M2.7** (17.000/mes) | DeepSeek V4 Pro (17.150/mes) | MiniMax: ~200GB VRAM, 2x H100 — self-host mais acessivel da faixa, SWE-Pro 56%. DSv4: coding 90, 1M contexto — melhor executor, mas exige 8x H100. |
+
+---
+
+### Faixa Media (31.800 a 50.500 req/mes) — custo intermediario-baixo
+
+**Modelos disponiveis:** MiniMax M2.5 (6.300 req/5h), Qwen3.5 Plus (10.200 req/5h)
+
+| Caso de uso | Melhor escolha | Alternativa | Justificativa |
+| --- | --- | --- | --- |
+| Busca e coleta de conteudo | **Qwen3.5 Plus** (50.500/mes) ⚠️ | MiniMax M2.5 (31.800/mes) | Qwen3.5: 1M contexto, familia Qwen historica em multilingual. Scores BenchLM nao disponiveis. MiniMax M2.5: 200K contexto — limitado para coleta massiva. |
+| Discussao sobre temas variados | **Qwen3.5 Plus** (50.500/mes) ⚠️ | MiniMax M2.5 (31.800/mes) ⚠️ | Ambos com scores limitados nos benchmarks. Qwen3.5: contexto maior favorece dialogos longos. MiniMax M2.5: Elo Arena nao publicado. Avaliar empiricamente. |
+| Planejamento de codificacao | **MiniMax M2.5** (31.800/mes) ⚠️ | Qwen3.5 Plus (50.500/mes) ⚠️ | MiniMax: SWE-bench Verified 80.2% — entende codigo real. Scores gerais limitados; planejamento complexo pode sofrer. Qwen3.5: 1M contexto compensa. |
+| Orquestracao de agentes | **MiniMax M2.5** (31.800/mes) ⚠️ | Qwen3.5 Plus (50.500/mes) ⚠️ | MiniMax: Agent Teams nativo, Multi-SWE 51.3%, 37% mais rapido. Qwen3.5: sem suporte nativo multi-agente. Ambos com capacidades reduzidas frente a faixas superiores. |
+| Agente codificador (workflow) | **MiniMax M2.5** (31.800/mes) ⚠️ | Qwen3.5 Plus (50.500/mes) ⚠️ | MiniMax: SWE-bench 80.2%. Faixa com opcoes limitadas para codificacao. Considere subir para a faixa Alta se a qualidade for prioritaria. |
+| Codificacao local (terminal) | **MiniMax M2.5** (31.800/mes) ⚠️ | — ⚠️ | MiniMax: ~200GB VRAM, Open Weight, 2x H100 — self-host viavel. Qwen3.5 Plus e API only, sem opcao self-host. Unico self-host da faixa. |
+
+> ⚠️ Faixa Media e a mais restrita: apenas 2 modelos, ambos com cobertura limitada de benchmarks. Para casos que exigem qualidade (orquestracao, codificacao), considere subir para a faixa Alta. Para volume, considere descer para a faixa Budget que tem mais opcoes.
+
+---
+
+### Faixa Budget (150.400 a 158.150 req/mes) — menor custo por chamada
+
+**Modelos disponiveis:** MiMo-V2.5 (30.100 req/5h), DeepSeek V4 Flash (31.650 req/5h)
+
+| Caso de uso | Melhor escolha | Alternativa | Justificativa |
+| --- | --- | --- | --- |
+| Busca e coleta de conteudo | **DeepSeek V4 Flash** (158.150/mes) | MiMo-V2.5 (150.400/mes) | DSv4 Flash: score 76, 1M contexto, lider custo-beneficio (271 score/$ BenchLM). MiMo-V2.5: multimodal nativo — coleta de conteudo visual e documentos. |
+| Discussao sobre temas variados | **MiMo-V2.5** (150.400/mes) | DeepSeek V4 Flash (158.150/mes) | MiMo: Elo 1429, multimodal nativo, eficiencia de tokens. DSv4 Flash: Elo 1432, score 76. Ambos com bom custo-beneficio; MiMo leva vantagem em dialogos com imagens. |
+| Planejamento de codificacao | **DeepSeek V4 Flash** (158.150/mes) | MiMo-V2.5 (150.400/mes) | DSv4 Flash: score 76, 1M contexto — analisa codebases inteiras. MiMo-V2.5: 1M contexto, multimodal — util para codebases com assets visuais. |
+| Orquestracao de agentes | **MiMo-V2.5** (150.400/mes) ⚠️ | DeepSeek V4 Flash (158.150/mes) ⚠️ | Ambos sem suporte nativo multi-agente. MiMo: agentic 66. Faixa Budget nao e ideal para orquestracao; considere MiniMax M2.5 na faixa Media. |
+| Agente codificador (workflow) | **DeepSeek V4 Flash** (158.150/mes) | MiMo-V2.5 (150.400/mes) | DSv4 Flash: LiveBench Coding 70.6, score 76, $0.14/$0.28 — executor de melhor custo-beneficio. MiMo-V2.5: eficiencia de tokens, multimodal — bom para pipelines que processam assets. |
+| Codificacao local (terminal) | **DeepSeek V4 Flash** (158.150/mes) | MiMo-V2.5 (150.400/mes) ⚠️ | DSv4 Flash: 13B ativos, MIT, 2x H100 — self-host mais barato da lista, 1M contexto. MiMo-V2.5: ~1TB VRAM, self-host pesado — viavel apenas como API na faixa. |
+
+> ⚠️ Orquestracao na faixa Budget: nenhum modelo possui suporte nativo multi-agente. Se orquestracao for essencial, suba para faixa Media (MiniMax M2.5) ou Alta (MiniMax M2.7).
+
+---
+
+### Tabela-resumo (consulta rapida)
+
+| Faixa (req/mes) | Busca e coleta | Discussao temas | Planejamento codigo | Orquestracao agentes | Agente codificador | Codificacao local |
+| --- | --- | --- | --- | --- | --- | --- |
+| **Premium** (4.3K–5.8K) | Qwen3.7 Max (4.8K) *(alt: GLM-5.1 4.3K)* | Qwen3.7 Max (4.8K) *(alt: GLM-5.1 4.3K)* | Qwen3.7 Max (4.8K) *(alt: GLM-5.1 4.3K)* | Kimi K2.6 (5.8K) *(alt: GLM-5.1 4.3K)* | Kimi K2.6 (5.8K) *(alt: GLM-5.1 4.3K)* | — ⚠️ *(API: Qwen3.7 4.8K)* |
+| **Alta** (9.3K–17.2K) | DS V4 Pro (17.2K) *(alt: Qwen3.6 16.3K)* | DS V4 Pro (17.2K) *(alt: MiMo-V2.5-Pro 16.3K)* | DS V4 Pro (17.2K) *(alt: Qwen3.6 16.3K)* | MiniMax M2.7 (17.0K) *(alt: DS V4 Pro 17.2K)* | MiMo-V2.5-Pro (16.3K) *(alt: DS V4 Pro 17.2K)* | MiniMax M2.7 (17.0K) *(alt: DS V4 Pro 17.2K)* |
+| **Media** (31.8K–50.5K) | Qwen3.5 Plus (50.5K) ⚠️ *(alt: MM M2.5 31.8K)* | Qwen3.5 Plus (50.5K) ⚠️ *(alt: MM M2.5 31.8K)* | MiniMax M2.5 (31.8K) ⚠️ *(alt: Qwen3.5 50.5K)* | MiniMax M2.5 (31.8K) ⚠️ *(alt: Qwen3.5 50.5K)* | MiniMax M2.5 (31.8K) ⚠️ *(alt: Qwen3.5 50.5K)* | MiniMax M2.5 (31.8K) ⚠️ |
+| **Budget** (150K–158K) | DS V4 Flash (158K) *(alt: MiMo-V2.5 150K)* | MiMo-V2.5 (150K) *(alt: DS V4 Flash 158K)* | DS V4 Flash (158K) *(alt: MiMo-V2.5 150K)* | MiMo-V2.5 (150K) ⚠️ *(alt: DS V4 Flash 158K)* | DS V4 Flash (158K) *(alt: MiMo-V2.5 150K)* | DS V4 Flash (158K) *(alt: MiMo-V2.5 150K)* |
+
+> **Legenda:** Melhor escolha em negrito na tabela detalhada de cada faixa. Alternativa entre parenteses. ⚠️ = ressalva de adequacao limitada na faixa; considere subir ou descer de faixa.
+
+---
+
 ## Disponibilidade e licenciamento
 
 ### Modelos open-weight (baixaveis para self-hosting)
