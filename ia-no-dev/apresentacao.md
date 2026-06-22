@@ -20,15 +20,14 @@ date: Junho 2026
 | # | Tópico |
 |---|--------|
 | 1 | Modelos de LLM — o que são, quais existem |
-| 2 | Tokens e custos — a economia da IA |
-| 3 | Commands / Prompts — como falar com a IA |
-| 4 | Protocolo MCP — conectando a IA ao mundo |
-| 5 | Protocolo A2A — agentes conversando entre si |
-| 6 | RAG — busca + geração |
-| 7 | Engenharia de contexto — o que a IA enxerga |
-| 8 | Agentes de IA — autonomia em ação |
-| 9 | Skills — módulos de conhecimento reutilizável |
-| 10 | Harness — o ambiente completo de execução |
+| 2 | Commands / Prompts — como falar com a IA |
+| 3 | Protocolo MCP — conectando a IA ao mundo |
+| 4 | Protocolo A2A — agentes conversando entre si |
+| 5 | RAG — busca + geração |
+| 6 | Engenharia de contexto — tokens, custos e otimização |
+| 7 | Agentes de IA — autonomia em ação |
+| 8 | Skills — módulos de conhecimento reutilizável |
+| 9 | Harness — o ambiente completo de execução |
 
 ---
 
@@ -65,81 +64,7 @@ Verified, Pro e Lite são variantes do benchmark com níveis diferentes de dific
 
 ---
 
-# 2. Tokens e custos
-
----
-
-## O que é um token e por que importa?
-
-Token é a **unidade atômica de processamento** de um LLM.
-~1 token = ~4 caracteres em português (~0,75 palavras em inglês).
-
-| Referência | Tokens |
-|------------|--------|
-| "IA" | 1 |
-| "desenvolvimento" | 3 |
-| Uma página A4 (~500 palavras) | ~650 |
-| Arquivo de 1000 linhas de código | ~3.000-5.000 |
-
-**Por que importa:**
-- **Custo:** provedores cobram por token processado
-- **Janela de contexto:** limite máximo por requisição (128K a 1M tokens em 2026)
-- **Qualidade:** excesso de contexto degrada respostas (efeito "lost in the middle")
-
----
-
-## Estrutura de custo
-
-- **Input tokens:** o que você envia (prompt, contexto, ferramentas)
-- **Output tokens:** o que o modelo gera — custa **3 a 6x mais** que input
-- **Prompt caching:** se o início do contexto (system prompt, tools) for idêntico entre chamadas consecutivas, o provedor reaproveita a computação já feita e cobra ~90% menos por esses tokens
-
-| Faixa | Exemplos | Input/1M tokens |
-|-------|----------|-----------------|
-| Ultra-baixo | GPT-5 Nano ($0,05), Gemini Flash-Lite ($0,10) | $0,05 - $0,25 |
-| Produção | Claude Sonnet 4.6 ($3), GPT-5.4 ($2,50) | $2,50 - $3,00 |
-| Frontier | Claude Opus 4.7 ($5), GPT-5.5 ($5) | $5,00 |
-
-Fontes: preços oficiais de Anthropic [1], OpenAI [3], Google [4].
-
----
-
-## Cenário realista
-
-agente refatora um módulo de 15 arquivos
-(~30 min de trabalho):
-
-- Lê 15 arquivos, escreve as versões refatoradas, ~20 turnos de ida e volta
-- ~1M tokens de input acumulados nos 20 turnos, ~40K tokens de output
-- **Sem cache (primeira execução):**
-
-| Modelo | Custo da tarefa |
-|--------|----------------|
-| DeepSeek V4 Flash ($0,14/$0,28) | $0,15 |
-| DeepSeek V4 Pro ($0,43/$0,87) | $0,47 |
-| Claude Sonnet 4.6 ($3/$15) | $3,60 |
-| Claude Opus 4.7 ($5/$25) | **$6,00** |
-| GPT-5.5 ($5/$30) | $6,20 |
-
-- **Com cache (segunda execução em diante):** o system prompt e tools
-  já estão cacheados (90% de desconto no input)
-
-| Modelo | Custo da tarefa |
-|--------|----------------|
-| DeepSeek V4 Flash | $0,01 |
-| DeepSeek V4 Pro | $0,04 |
-| Claude Sonnet 4.6 | $0,90 |
-| Claude Opus 4.7 | $1,50 |
-| GPT-5.5 | $1,70 |
-
-> Um bug complexo pode consumir **$6 em 30 min** na primeira execução
-> (Opus 4.7), mas cai para **$1,50** nas execuções seguintes com cache.
-> Modele o custo antes de escolher o modelo: o barato resolve 80% do
-> dia a dia; reserve o frontier para tarefas críticas.
-
----
-
-# 3. Commands / Prompts
+# 2. Commands / Prompts
 
 ---
 
@@ -218,7 +143,7 @@ Turno 2: User: "Refatore o módulo payment.py..."
 
 ---
 
-# 4. Protocolo MCP
+# 3. Protocolo MCP
 
 ---
 
@@ -284,7 +209,7 @@ usá-la, e o servidor MCP executa com segurança no ambiente controlado.
 
 ---
 
-# 5. A2A
+# 4. A2A
 
 ---
 
@@ -304,7 +229,7 @@ mesmo que eles rodem em frameworks ou provedores diferentes.
 
 ---
 
-# 6. RAG
+# 5. RAG
 
 ---
 
@@ -341,30 +266,67 @@ Usuário pergunta → Busca documentos relevantes → Injeta no contexto → LLM
 
 ---
 
-# 7. Engenharia de contexto
+# 6. Engenharia de contexto e custos
 
 ---
 
-## O que é engenharia de contexto?
+## Tokens e custos
 
-Disciplina de fazer a **curadoria** de tudo que o modelo vê em cada etapa
-da execução.
+Token é a **unidade atômica de processamento** de um LLM.
+~1 token = ~4 caracteres em português.
 
-- Prompt engineering: otimiza **o que você diz**
-- Context engineering: otimiza **o que o modelo enxerga**
+- **Input tokens:** o que você envia (prompt, contexto, ferramentas)
+- **Output tokens:** o que o modelo gera — custa **3 a 6x mais** que input
+- **Prompt caching:** se o início do contexto (system prompt, tools) for
+  idêntico entre chamadas consecutivas, o provedor reaproveita a computação
+  já feita e cobra ~90% menos por esses tokens
 
-**Por que curadoria importa:** em agentes que executam dezenas de turnos,
-o prompt inicial é uma fração mínima do que o modelo processa. O resto é
-histórico de conversa, resultados de ferramentas e documentos — um volume
-de informação que cresce rápido e, se não for curado, degrada a qualidade.
+| Faixa | Exemplos | Input/1M tokens |
+|-------|----------|-----------------|
+| Ultra-baixo | GPT-5 Nano ($0,05), Gemini Flash-Lite ($0,10) | $0,05 - $0,25 |
+| Produção | Claude Sonnet 4.6 ($3), GPT-5.4 ($2,50) | $2,50 - $3,00 |
+| Frontier | Claude Opus 4.7 ($5), GPT-5.5 ($5) | $5,00 |
 
-**As 3 ações da curadoria de contexto:**
+---
 
-| Ação | O que faz |
-|------|-----------|
-| **Selecionar** | Trazer só a informação relevante para a tarefa |
-| **Comprimir** | Reduzir o que é acessório sem perder o essencial |
-| **Isolar** | Separar contextos entre agentes especializados |
+## Cenário realista
+
+agente refatora um módulo de 15 arquivos
+(~30 min de trabalho):
+
+- ~20 turnos, ~1M tokens de input acumulados, ~40K tokens de output
+
+**Sem cache:**
+
+| Modelo | Custo da tarefa |
+|--------|----------------|
+| DeepSeek V4 Pro ($0,43/$0,87) | $0,47 |
+| Claude Sonnet 4.6 ($3/$15) | $3,60 |
+| Claude Opus 4.7 ($5/$25) | **$6,00** |
+
+**Com cache (segunda execução em diante):**
+
+| Modelo | Custo da tarefa |
+|--------|----------------|
+| DeepSeek V4 Pro | $0,04 |
+| Claude Sonnet 4.6 | $0,90 |
+| Claude Opus 4.7 | $1,50 |
+
+> Um bug pode consumir **$6 em 30 min** no Opus 4.7, mas cai para
+> **$1,50** com cache. A engenharia de contexto reduz esse custo
+> selecionando e comprimindo o que o modelo processa.
+
+---
+
+## Como otimizar: engenharia de contexto
+
+As 3 ações da curadoria reduzem tokens e custo:
+
+| Ação | O que faz | Impacto no custo |
+|------|-----------|------------------|
+| **Selecionar** | Trazer só o relevante | Menos tokens de input |
+| **Comprimir** | Reduzir o acessório | Menos histórico no contexto |
+| **Isolar** | Separar contextos entre agentes | Cada agente processa menos |
 
 > Prompt engineering é sobre o cardápio. Context engineering é sobre
 > os ingredientes que chegam à cozinha — e em que quantidade.
@@ -384,7 +346,7 @@ repositório com 200 arquivos.
 
 ---
 
-# 8. Agentes de IA
+# 7. Agentes de IA
 
 ---
 
@@ -428,7 +390,7 @@ O "Engenheiro de Software Sênior Python" é um **agente customizado**
 
 ---
 
-# 9. Skills
+# 8. Skills
 
 ---
 
@@ -494,7 +456,7 @@ System: [conteúdo completo de code-review/SKILL.md]
 
 ---
 
-# 10. Harness
+# 9. Harness
 
 ---
 
