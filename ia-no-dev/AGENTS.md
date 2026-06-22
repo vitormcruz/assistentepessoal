@@ -38,3 +38,27 @@ software. O agente deve seguir estas regras ao trabalhar aqui.
 - Conversão para PowerPoint: `pandoc apresentacao.md -o apresentacao.pptx`
 - Slides são delimitados por `---`
 - Imagens referenciadas com caminho relativo: `![](imagens/<nome>.png)`
+
+### Princípio: slides são headlines
+
+Cada slide deve conter apenas o essencial — headlines, palavras-chave,
+diagramas ou tabelas compactas. O apresentador fala o conteúdo; o slide
+ancora a atenção.
+
+- Evite blocos densos de texto — se uma ideia precisa de parágrafo, ela
+  vai na fala, não no slide
+- Prefira imagens descritivas e esquemas visuais a listas de texto
+- Tabelas são aceitáveis quando comparam dados de forma sucinta
+- Um slide deve comunicar **uma** ideia principal
+
+### Princípio: slides são headlines
+
+Cada slide deve conter apenas o essencial — headlines, palavras-chave,
+diagramas ou tabelas compactas. O apresentador fala o conteúdo; o slide
+ancora a atenção.
+
+- Evite blocos densos de texto — se uma ideia precisa de parágrafo, ela
+  vai na fala, não no slide
+- Prefira imagens descritivas e esquemas visuais a listas de texto
+- Tabelas são aceitáveis quando comparam dados de forma sucinta
+- Um slide deve comunicar **uma** ideia principal

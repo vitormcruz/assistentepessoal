@@ -38,62 +38,30 @@ date: Junho 2026
 
 ## O que é um LLM?
 
-**Large Language Model** — rede neural treinada sobre conjunto massivo de
-texto e código.
-
-- Entrada: texto (prompt) → Saída: texto (completion)
-- Funcionamento: predição de próximo token — **não é raciocínio consciente**
-
-| Confusão comum | Realidade |
-|----------------|-----------|
-| "A IA pensa" | Prevê tokens probabilisticamente; não há consciência |
-| "O modelo sabe tudo" | Sabe o que estava nos dados de treino até a data de corte |
-| "LLM = ChatGPT" | ChatGPT é produto; GPT é o modelo. Também existem Claude, Gemini, Llama, DeepSeek |
-| "Quanto maior, melhor" | Modelos menores e especializados em código frequentemente superam genéricos maiores |
+[![](imagens/o-que-e-llm.png)](docs/o-que-e-llm.md)
 
 ---
 
-## Principais LLMs para código (Jun/2026)
+## Escala de um LLM
 
-| Modelo | Fornecedor | Acerto em bugs reais (SWE-bench) | Custo (input/output 1M tokens) |
-|--------|-----------|--------------------|--------------------------------|
-| Claude Opus 4.8 | Anthropic | 88,6% | $5 / $25 |
-| Claude Opus 4.7 | Anthropic | 87,6% | $5 / $25 |
-| GPT-5.5 | OpenAI | 82,6% | $5 / $30 |
-| Claude Sonnet 4.6 | Anthropic | 79,6% — melhor custo-benefício | $3 / $15 |
-| DeepSeek V4 Pro | DeepSeek | 80,6% — líder open-weight | $0,43 / $0,87 |
-| Gemini 3.1 Pro | Google | 80,6% — multimodal, 1M contexto | $2 / $12 |
+[![](imagens/escala-llm.png)](docs/escala-llm.md)
+
+---
+
+## LLMs e seus custos
+
+| Modelo | Acerto em bugs reais (SWE-bench) | Custo |
+|--------|--------------------------------|-------|
+| Claude Opus 4.8 | 88,6% (Verified) | $5 / $25 (API) |
+| GPT-5.5 | 82,6% (Verified) | $5 / $30 (API) |
+| Claude Sonnet 4.6 | 79,6% (Verified) | $3 / $15 (API) |
+| DeepSeek V4 Pro | 80,6% (Verified) | $0,43 / $0,87 (API) |
+| GLM-5.2 | 62,1% (Pro) | ~$15.000 (servidor, 4× H100 80GB) |
+| Qwen3-32B | 16,3% (Lite) | ~$4.000 (Mac Studio 128GB) |
 
 Fontes: [1] [2] [3] [4] — ver slide de referências ao final.
 SWE-bench: % de bugs reais de GitHub resolvidos pelo agente de forma autônoma.
-
-**Modelos abertos (open-weight):**
-
-| Modelo | Destaque | Licença |
-|--------|----------|---------|
-| Qwen3-32B | Melhor open-weight para código | Apache 2.0 |
-| Granite Code 34B | IBM, foco enterprise | Apache 2.0 |
-| StarCoder 3 | Totalmente aberto (dados + código + pesos) | OpenRAIL |
-
----
-
-## Modelos abertos vs fechados: onde está a diferença?
-
-Em tarefas simples (escrever uma função), modelos abertos e fechados têm
-desempenho próximo — a qualidade do código gerado é similar.
-
-A diferença real aparece em **tarefas complexas e autônomas**: resolver
-bugs em repositórios reais com centenas de arquivos, onde o agente precisa
-planejar, buscar contexto, editar múltiplos arquivos e verificar o resultado.
-
-| Cenário | Taxa de acerto (SWE-bench Verified) |
-|---------|--------------------------------------|
-| Modelo open-weight + agente open-source básico | ~50-65% |
-| Modelo fechado + harness proprietário completo | ~80-88% |
-| Claude Opus 4.7 + Claude Code | 87,6% |
-
-> Não é o modelo puro que faz a diferença — é o **harness** que direciona,
-> restringe e estabiliza o modelo durante a execução autônoma.
+Verified, Pro e Lite são variantes do benchmark com níveis diferentes de dificuldade.
 
 ---
 
