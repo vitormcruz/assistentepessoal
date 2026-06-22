@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" width="900" height="700">
+  <defs>
+    <linearGradient id="centerGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4F46E5"/>
+      <stop offset="100%" stop-color="#3730A3"/>
+    </linearGradient>
+    <linearGradient id="sysGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7C3AED"/>
+      <stop offset="100%" stop-color="#5B21B6"/>
+    </linearGradient>
+    <linearGradient id="userGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+    <linearGradient id="skillGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#D97706"/>
+      <stop offset="100%" stop-color="#B45309"/>
+    </linearGradient>
+    <linearGradient id="cmdGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#DC2626"/>
+      <stop offset="100%" stop-color="#B91C1C"/>
+    </linearGradient>
+    <linearGradient id="agentsGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0891B2"/>
+      <stop offset="100%" stop-color="#0E7490"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="5" flood-opacity="0.12"/>
+    </filter>
+    <filter id="shadowLight">
+      <feDropShadow dx="0" dy="1" stdDeviation="3" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="700" rx="12" fill="#F8FAFC"/>
+
+  <!-- Title -->
+  <text x="450" y="38" text-anchor="middle" fill="#1E293B" font-size="22" font-weight="700" font-family="sans-serif">Tudo que chega ao modelo é prompt</text>
+
+  <!-- Arrows from labels to center circle -->
+  <!-- System Prompt (top): label bottom to circle top -->
+  <line x1="450" y1="158" x2="450" y2="274" stroke="#7C3AED" stroke-width="2.5"/>
+  <!-- User Prompt (top-right): label left to circle -->
+  <line x1="553" y1="276" x2="522" y2="326" stroke="#059669" stroke-width="2.5"/>
+  <!-- Skills.md (bottom-right): label top to circle -->
+  <line x1="591" y1="497" x2="494" y2="404" stroke="#D97706" stroke-width="2.5"/>
+  <!-- AGENTS.md (bottom-left): label top to circle -->
+  <line x1="309" y1="497" x2="406" y2="404" stroke="#0891B2" stroke-width="2.5"/>
+  <!-- Command (top-left): label right to circle -->
+  <line x1="347" y1="276" x2="378" y2="326" stroke="#DC2626" stroke-width="2.5"/>
+
+  <!-- Center circle -->
+  <circle cx="450" cy="350" r="70" fill="url(#centerGrad)" filter="url(#shadow)"/>
+  <text x="450" y="342" text-anchor="middle" fill="white" font-size="20" font-weight="700" font-family="sans-serif">Modelo</text>
+  <text x="450" y="366" text-anchor="middle" fill="#C7D2FE" font-size="14" font-family="sans-serif">(LLM)</text>
+
+  <!-- System Prompt (top) -->
+  <rect x="325" y="63" width="250" height="95" rx="8" fill="url(#sysGrad)" filter="url(#shadowLight)"/>
+  <text x="337" y="87" text-anchor="start" fill="white" font-size="14" font-weight="700" font-family="sans-serif">System Prompt</text>
+  <text x="337" y="108" text-anchor="start" fill="#DDD6FE" font-size="11" font-family="sans-serif">Seja objetivo e educado.</text>
+  <text x="337" y="124" text-anchor="start" fill="#DDD6FE" font-size="11" font-family="sans-serif">Não use linguagem vulgar ou ofensiva.</text>
+  <text x="337" y="140" text-anchor="start" fill="#DDD6FE" font-size="11" font-family="sans-serif">Explique apenas quando solicitado.</text>
+
+  <!-- User Prompt (top-right) -->
+  <rect x="553" y="229" width="250" height="95" rx="8" fill="url(#userGrad)" filter="url(#shadowLight)"/>
+  <text x="565" y="253" text-anchor="start" fill="white" font-size="14" font-weight="700" font-family="sans-serif">User Prompt</text>
+  <text x="565" y="274" text-anchor="start" fill="#A7F3D0" font-size="11" font-family="sans-serif">Refatore o módulo payment.py:</text>
+  <text x="565" y="290" text-anchor="start" fill="#A7F3D0" font-size="11" font-family="sans-serif">extraia a validação de cartão para</text>
+  <text x="565" y="306" text-anchor="start" fill="#A7F3D0" font-size="11" font-family="sans-serif">uma função separada validate_card().</text>
+
+  <!-- Skills.md (bottom-right) -->
+  <rect x="456" y="497" width="270" height="95" rx="8" fill="url(#skillGrad)" filter="url(#shadowLight)"/>
+  <text x="468" y="521" text-anchor="start" fill="white" font-size="14" font-weight="700" font-family="sans-serif">Skills.md</text>
+  <text x="468" y="542" text-anchor="start" fill="#FDE68A" font-size="11" font-family="sans-serif">Commit: use conventional commits.</text>
+  <text x="468" y="558" text-anchor="start" fill="#FDE68A" font-size="11" font-family="sans-serif">Formato: tipo(escopo): descrição.</text>
+  <text x="468" y="574" text-anchor="start" fill="#FDE68A" font-size="11" font-family="sans-serif">Sempre confirme a mensagem com o usuário.</text>
+
+  <!-- AGENTS.md (bottom-left) -->
+  <rect x="184" y="497" width="250" height="95" rx="8" fill="url(#agentsGrad)" filter="url(#shadowLight)"/>
+  <text x="196" y="521" text-anchor="start" fill="white" font-size="14" font-weight="700" font-family="sans-serif">AGENTS.md</text>
+  <text x="196" y="542" text-anchor="start" fill="#67E8F9" font-size="11" font-family="sans-serif">Use tabs para indentação.</text>
+  <text x="196" y="558" text-anchor="start" fill="#67E8F9" font-size="11" font-family="sans-serif">Testes: pytest.</text>
+  <text x="196" y="574" text-anchor="start" fill="#67E8F9" font-size="11" font-family="sans-serif">Não mexer em /infra.</text>
+
+  <!-- Command (top-left) -->
+  <rect x="97" y="229" width="250" height="95" rx="8" fill="url(#cmdGrad)" filter="url(#shadowLight)"/>
+  <text x="109" y="253" text-anchor="start" fill="white" font-size="14" font-weight="700" font-family="sans-serif">Command</text>
+  <text x="109" y="274" text-anchor="start" fill="#FECACA" font-size="11" font-family="sans-serif">/testes-processo-compra</text>
+  <text x="109" y="290" text-anchor="start" fill="#FECACA" font-size="11" font-family="sans-serif">mvn test -pl modulo-pagamento</text>
+  <text x="109" y="306" text-anchor="start" fill="#FECACA" font-size="11" font-family="sans-serif">Verifique cobertura &gt; 80%.</text>
+
+
+</svg>

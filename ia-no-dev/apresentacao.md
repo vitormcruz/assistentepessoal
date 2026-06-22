@@ -20,7 +20,7 @@ date: Junho 2026
 | # | Tópico |
 |---|--------|
 | 1 | Modelos de LLM — o que são, quais existem |
-| 2 | Commands / Prompts — como falar com a IA |
+| 2 | Prompts — como falar com a IA |
 | 3 | Protocolo MCP — conectando a IA ao mundo |
 | 4 | Protocolo A2A — agentes conversando entre si |
 | 5 | RAG — busca + geração |
@@ -41,7 +41,7 @@ date: Junho 2026
 
 ---
 
-## Escala de um LLM
+## Construindo um LLM
 
 [![](imagens/escala-llm.png)](docs/escala-llm.md)
 
@@ -58,88 +58,18 @@ date: Junho 2026
 | GLM-5.2 | 62,1% (Pro) | ~$15.000 (servidor, 4× H100 80GB) |
 | Qwen3-32B | 16,3% (Lite) | ~$4.000 (Mac Studio 128GB) |
 
-Fontes: [1] [2] [3] [4] — ver slide de referências ao final.
-SWE-bench: % de bugs reais de GitHub resolvidos pelo agente de forma autônoma.
-Verified, Pro e Lite são variantes do benchmark com níveis diferentes de dificuldade.
-
 ---
 
-# 2. Commands / Prompts
+# 2. Prompts
 
 ---
 
 ## O que é um prompt?
 
-**Prompt** é tudo que você envia ao LLM para guiar sua resposta.
-Não é só "uma pergunta" — é um artefato de engenharia com múltiplos
-componentes.
+**Prompt** é tudo que chega ao modelo — não importa a origem:
+system prompt, user prompt, skills, comandos, AGENTS.md. Tudo vira prompt.
 
-Os **4 componentes** de uma chamada ao modelo:
-
-| Componente | O que é | Quem define |
-|------------|---------|-------------|
-| System prompt | Papel, tom, regras, restrições de comportamento | O harness (AGENTS.md, config) |
-| User prompt | A tarefa ou pergunta específica | O desenvolvedor |
-| Tool definitions | Esquema JSON das ferramentas disponíveis | MCP + código do agente |
-| Conversation history | Histórico de mensagens anteriores | Automático (acumulado a cada turno) |
-
----
-
-## System prompt — exemplo real
-
-Define **quem** o modelo é e **como** deve se comportar.
-Injetado pelo harness, não pelo usuário.
-
-```
-Você é um engenheiro de software sênior especializado em Python.
-Regras:
-- Use type hints em todas as funções
-- Prefira dataclasses a dicionários
-- Testes com pytest, cobertura mínima de 80%
-- Nunca use `except Exception` genérico
-- Explique mudanças não-triviais com comentários concisos
-```
-
-> O system prompt é fixo e cacheado — trocá-lo a cada chamada
-> quebra o cache e aumenta o custo em até 10x.
-
----
-
-## User prompt + Histórico — exemplo real
-
-**User prompt** — a tarefa enviada a cada turno:
-
-```
-Refatore o módulo `payment.py`: extraia a lógica de validação
-de cartão para uma função separada `validate_card()`. Mantenha
-os testes existentes passando.
-```
-
-**Conversation history** — acumulado automaticamente:
-
-```
-Turno 1: User: "Liste os arquivos do módulo de pagamento"
-         Assistant: "Encontrei: payment.py, payment_test.py, gateway.py"
-Turno 2: User: "Refatore o módulo payment.py..."
-         Assistant: [resposta atual]
-```
-
-> Em agentes de 50+ turnos, o histórico é o maior consumidor da janela
-> de contexto — é aqui que a engenharia de contexto se torna essencial.
-
----
-
-## Prompt ≠ Command
-
-| Prompt | Command |
-|--------|---------|
-| Instrução livre em linguagem natural | Atalho predefinido com comportamento conhecido |
-| "Explique o que esse código faz e sugira melhorias" | `/review` — dispara fluxo de code review |
-| Cada uso pode ser diferente | Sempre faz a mesma coisa |
-| Ex: mensagem no chat | Ex: `/fix`, `/test`, `/explain`, `/deploy` |
-
-> Commands são prompts **empacotados e reutilizáveis** — economizam tempo
-> e garantem consistência. Quem define os commands disponíveis é o harness.
+[![](imagens/prompt-componentes.png)](docs/prompt-componentes.md)
 
 ---
 
