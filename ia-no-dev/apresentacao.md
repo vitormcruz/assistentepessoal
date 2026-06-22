@@ -79,63 +79,35 @@ system prompt, user prompt, skills, comandos, AGENTS.md. Tudo vira prompt.
 
 ## O que é o Model Context Protocol?
 
-Protocolo **aberto e padronizado** para conectar IAs a sistemas externos
-(dados, APIs, ferramentas).
+Protocolo **aberto e padronizado** para conectar IAs a sistemas
+externos (dados, APIs, ferramentas).
 
 - Criado pela Anthropic (Nov/2024), doado à **Linux Foundation** (Dez/2025)
-- +97M downloads mensais nos SDKs Python e TypeScript
-- +10.000 servidores públicos no registry oficial
+- +97M downloads mensais, +10.000 servidores no registry público
+- Suporte nativo: Claude, ChatGPT, Gemini, VS Code, Cursor, Copilot
+- Em 18 meses tornou-se o **padrão de fato** da indústria.
 
 > **Analogia:** MCP está para IA como **USB-C** para dispositivos —
 > um conector universal. Na metáfora do corpo: são os **braços, pernas
-> e sentidos** que permitem à IA interagir com o mundo externo.
-
-Em 18 meses, tornou-se o **padrão de fato** da indústria: governança
-neutra (AAIF, co-fundada por Anthropic, Block, OpenAI), suporte nativo
-em Claude, ChatGPT, Gemini, VS Code, Cursor, Copilot, e 41% das
-organizações de software já em produção (Stacklok 2026).
-
-> O MCP não é mais um conceito emergente — é a camada padrão para
-> sistemas de IA.
+> e sentidos** da IA interagindo com o mundo.
 
 ---
 
-## O problema N×M resolvido
+## Sem MCP
 
-| Antes do MCP | Com MCP |
-|--------------|---------|
-| 5 modelos × 10 sistemas = **50 conectores** | 1 servidor por sistema = **10 servidores** |
-| Código específico por par modelo-sistema | Compatível com qualquer modelo |
-| Manutenção N×M | Manutenção 1 por sistema |
+[![](imagens/mcp-sem-mcp.png)](docs/mcp-nxm.md)
 
-[![](imagens/mcp-arquitetura.png)](docs/mcp-arquitetura.md)
+---
 
-Transportes: stdio (local) ou Streamable HTTP (remoto, produção).
+## Com MCP
+
+[![](imagens/mcp-com-mcp.png)](docs/mcp-nxm.md)
 
 ---
 
 ## MCP na prática
 
-**Exemplo: servidor MCP do PostgreSQL**
-
-Expõe ferramentas: `query`, `list_tables`, `describe_table`
-
-```
-Você: "Quantos usuários ativos temos esse mês?"
-
-O agente recebe as tools no contexto e decide chamar:
-  → query("SELECT COUNT(*) FROM users WHERE active = true")
-
-O MCP Server executa no PostgreSQL (com as credenciais e
-permissões definidas por você, não pelo agente)
-
-Retorna: [{count: 15420}]
-
-Agente: "Temos 15.420 usuários ativos este mês."
-```
-
-O agente não "sabe SQL" — ele recebe a ferramenta como opção, decide
-usá-la, e o servidor MCP executa com segurança no ambiente controlado.
+[![](imagens/mcp-fluxo.png)](docs/mcp-fluxo.md)
 
 ---
 

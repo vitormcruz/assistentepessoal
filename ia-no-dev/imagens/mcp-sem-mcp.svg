@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="800" height="480">
+  <defs>
+    <linearGradient id="modelGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4F46E5"/>
+      <stop offset="100%" stop-color="#3730A3"/>
+    </linearGradient>
+    <linearGradient id="sysGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <g transform="scale(0.833, 1)">
+
+  <rect width="960" height="480" rx="12" fill="#F8FAFC"/>
+
+  <text x="480" y="32" text-anchor="middle" fill="#EF4444" font-size="20" font-weight="700" font-family="sans-serif">Sem MCP</text>
+  <text x="480" y="52" text-anchor="middle" fill="#94A3B8" font-size="13" font-family="sans-serif">5 modelos × 5 sistemas = 25 conectores específicos</text>
+
+  <!-- Models -->
+  <rect x="30" y="76" width="80" height="22" rx="6" fill="url(#modelGrad)" filter="url(#shadow)"/>
+  <text x="70" y="91" text-anchor="middle" fill="white" font-size="11" font-weight="600" font-family="sans-serif">Claude</text>
+
+  <rect x="30" y="166" width="80" height="22" rx="6" fill="url(#modelGrad)" filter="url(#shadow)"/>
+  <text x="70" y="181" text-anchor="middle" fill="white" font-size="11" font-weight="600" font-family="sans-serif">GPT</text>
+
+  <rect x="30" y="256" width="80" height="22" rx="6" fill="url(#modelGrad)" filter="url(#shadow)"/>
+  <text x="70" y="271" text-anchor="middle" fill="white" font-size="11" font-weight="600" font-family="sans-serif">Gemini</text>
+
+  <rect x="30" y="346" width="80" height="22" rx="6" fill="url(#modelGrad)" filter="url(#shadow)"/>
+  <text x="70" y="361" text-anchor="middle" fill="white" font-size="11" font-weight="600" font-family="sans-serif">DeepSeek</text>
+
+  <rect x="30" y="436" width="80" height="22" rx="6" fill="url(#modelGrad)" filter="url(#shadow)"/>
+  <text x="70" y="451" text-anchor="middle" fill="white" font-size="11" font-weight="600" font-family="sans-serif">Copilot</text>
+
+  <text x="70" y="474" text-anchor="middle" fill="#94A3B8" font-size="10" font-family="sans-serif">Modelos</text>
+
+  <!-- Systems (5, aligned with models) -->
+  <rect x="830" y="78" width="100" height="18" rx="4" fill="url(#sysGrad)" filter="url(#shadow)"/>
+  <text x="880" y="92" text-anchor="middle" fill="white" font-size="10" font-weight="600" font-family="sans-serif">PostgreSQL</text>
+
+  <rect x="830" y="168" width="100" height="18" rx="4" fill="url(#sysGrad)" filter="url(#shadow)"/>
+  <text x="880" y="182" text-anchor="middle" fill="white" font-size="10" font-weight="600" font-family="sans-serif">GitHub</text>
+
+  <rect x="830" y="258" width="100" height="18" rx="4" fill="url(#sysGrad)" filter="url(#shadow)"/>
+  <text x="880" y="272" text-anchor="middle" fill="white" font-size="10" font-weight="600" font-family="sans-serif">Slack</text>
+
+  <rect x="830" y="348" width="100" height="18" rx="4" fill="url(#sysGrad)" filter="url(#shadow)"/>
+  <text x="880" y="362" text-anchor="middle" fill="white" font-size="10" font-weight="600" font-family="sans-serif">Jira</text>
+
+  <rect x="830" y="438" width="100" height="18" rx="4" fill="url(#sysGrad)" filter="url(#shadow)"/>
+  <text x="880" y="452" text-anchor="middle" fill="white" font-size="10" font-weight="600" font-family="sans-serif">Redis</text>
+
+  <text x="880" y="474" text-anchor="middle" fill="#94A3B8" font-size="10" font-family="sans-serif">Sistemas</text>
+
+  <!-- Spaghetti (25 lines, 5 per model) -->
+  <g stroke="#EF4444" stroke-width="1.5" opacity="0.6">
+    <!-- Claude → 5 systems -->
+    <line x1="110" y1="87" x2="830" y2="87"/>
+    <line x1="110" y1="87" x2="830" y2="177"/>
+    <line x1="110" y1="87" x2="830" y2="267"/>
+    <line x1="110" y1="87" x2="830" y2="357"/>
+    <line x1="110" y1="87" x2="830" y2="447"/>
+    <!-- GPT → 5 systems -->
+    <line x1="110" y1="177" x2="830" y2="87"/>
+    <line x1="110" y1="177" x2="830" y2="177"/>
+    <line x1="110" y1="177" x2="830" y2="267"/>
+    <line x1="110" y1="177" x2="830" y2="357"/>
+    <line x1="110" y1="177" x2="830" y2="447"/>
+    <!-- Gemini → 5 systems -->
+    <line x1="110" y1="267" x2="830" y2="87"/>
+    <line x1="110" y1="267" x2="830" y2="177"/>
+    <line x1="110" y1="267" x2="830" y2="267"/>
+    <line x1="110" y1="267" x2="830" y2="357"/>
+    <line x1="110" y1="267" x2="830" y2="447"/>
+    <!-- DeepSeek → 5 systems -->
+    <line x1="110" y1="357" x2="830" y2="87"/>
+    <line x1="110" y1="357" x2="830" y2="177"/>
+    <line x1="110" y1="357" x2="830" y2="267"/>
+    <line x1="110" y1="357" x2="830" y2="357"/>
+    <line x1="110" y1="357" x2="830" y2="447"/>
+    <!-- Copilot → 5 systems -->
+    <line x1="110" y1="447" x2="830" y2="87"/>
+    <line x1="110" y1="447" x2="830" y2="177"/>
+    <line x1="110" y1="447" x2="830" y2="267"/>
+    <line x1="110" y1="447" x2="830" y2="357"/>
+    <line x1="110" y1="447" x2="830" y2="447"/>
+  </g>
+
+  </g>
+</svg>

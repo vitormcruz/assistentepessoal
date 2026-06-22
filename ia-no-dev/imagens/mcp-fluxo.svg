@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 340" width="960" height="340">
+  <defs>
+    <linearGradient id="voceGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#64748B"/>
+      <stop offset="100%" stop-color="#475569"/>
+    </linearGradient>
+    <linearGradient id="agenteGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4F46E5"/>
+      <stop offset="100%" stop-color="#3730A3"/>
+    </linearGradient>
+    <linearGradient id="mcpGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7C3AED"/>
+      <stop offset="100%" stop-color="#5B21B6"/>
+    </linearGradient>
+    <linearGradient id="pgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect width="960" height="340" rx="12" fill="#F8FAFC"/>
+
+  <!-- Title -->
+  <text x="480" y="22" text-anchor="middle" fill="#1E293B" font-size="18" font-weight="700" font-family="sans-serif">MCP na prática — servidor PostgreSQL</text>
+
+  <!-- Annotation -->
+  <text x="480" y="43" text-anchor="middle" fill="#1E293B" font-size="11" font-weight="600" font-family="sans-serif">O agente não "sabe SQL" — ele decide usar a ferramenta. Quem executa é o MCP Server, com segurança.</text>
+
+  <!-- ===== MAIN FLOW ===== -->
+
+  <!-- Você -->
+  <rect x="20" y="70" width="90" height="60" rx="8" fill="url(#voceGrad)" filter="url(#shadow)"/>
+  <text x="65" y="105" text-anchor="middle" fill="white" font-size="14" font-weight="700" font-family="sans-serif">Você</text>
+
+  <!-- Agente -->
+  <rect x="240" y="55" width="180" height="80" rx="8" fill="url(#agenteGrad)" filter="url(#shadow)"/>
+  <text x="330" y="82" text-anchor="middle" fill="white" font-size="14" font-weight="700" font-family="sans-serif">Agente (LLM)</text>
+  <text x="330" y="104" text-anchor="middle" fill="#C7D2FE" font-size="10" font-family="sans-serif">Recebe as tools no contexto</text>
+  <text x="330" y="120" text-anchor="middle" fill="#C7D2FE" font-size="10" font-family="sans-serif">e decide chamar query()</text>
+
+  <!-- MCP Server -->
+  <rect x="530" y="55" width="180" height="80" rx="8" fill="url(#mcpGrad)" filter="url(#shadow)"/>
+  <text x="620" y="82" text-anchor="middle" fill="white" font-size="14" font-weight="700" font-family="sans-serif">MCP Server</text>
+  <text x="620" y="104" text-anchor="middle" fill="#DDD6FE" font-size="10" font-family="sans-serif">Executa com credenciais</text>
+  <text x="620" y="120" text-anchor="middle" fill="#DDD6FE" font-size="10" font-family="sans-serif">definidas por você</text>
+
+  <!-- PostgreSQL -->
+  <rect x="820" y="70" width="120" height="60" rx="8" fill="url(#pgGrad)" filter="url(#shadow)"/>
+  <text x="880" y="98" text-anchor="middle" fill="white" font-size="13" font-weight="700" font-family="sans-serif">PostgreSQL</text>
+  <text x="880" y="116" text-anchor="middle" fill="#A7F3D0" font-size="9" font-family="sans-serif">Banco de dados</text>
+
+  <!-- Forward arrows -->
+  <!-- Você → Agente -->
+  <line x1="110" y1="100" x2="234" y2="100" stroke="#64748B" stroke-width="2.5"/>
+  <polygon points="234,100 224,94 224,106" fill="#64748B"/>
+  <text x="172" y="84" text-anchor="middle" fill="#475569" font-size="10" font-family="sans-serif">"Quantos usuários</text>
+  <text x="172" y="96" text-anchor="middle" fill="#475569" font-size="10" font-family="sans-serif">ativos este mês?"</text>
+
+  <!-- Agente → MCP Server -->
+  <line x1="420" y1="100" x2="524" y2="100" stroke="#4F46E5" stroke-width="2.5"/>
+  <polygon points="524,100 514,94 514,106" fill="#4F46E5"/>
+  <text x="472" y="84" text-anchor="middle" fill="#3730A3" font-size="10" font-weight="600" font-family="sans-serif">query(</text>
+  <text x="472" y="96" text-anchor="middle" fill="#3730A3" font-size="9" font-family="sans-serif">"SELECT COUNT(*) FROM users...")</text>
+
+  <!-- MCP Server → PostgreSQL -->
+  <line x1="710" y1="100" x2="814" y2="100" stroke="#7C3AED" stroke-width="2.5"/>
+  <polygon points="814,100 804,94 804,106" fill="#7C3AED"/>
+  <text x="762" y="84" text-anchor="middle" fill="#5B21B6" font-size="10" font-weight="600" font-family="sans-serif">Executa SQL</text>
+
+  <!-- Return arrows (dashed, below) -->
+  <!-- PostgreSQL → MCP Server -->
+  <line x1="814" y1="150" x2="710" y2="150" stroke="#059669" stroke-width="2" stroke-dasharray="6,3"/>
+  <polygon points="710,150 720,144 720,156" fill="#059669"/>
+  <text x="762" y="140" text-anchor="middle" fill="#047857" font-size="10" font-weight="600" font-family="sans-serif">[{count: 15420}]</text>
+
+  <!-- MCP Server → Agente → Você -->
+  <line x1="524" y1="150" x2="110" y2="150" stroke="#4F46E5" stroke-width="2" stroke-dasharray="6,3"/>
+  <polygon points="110,150 120,144 120,156" fill="#4F46E5"/>
+  <text x="317" y="140" text-anchor="middle" fill="#3730A3" font-size="10" font-weight="600" font-family="sans-serif">"Temos 15.420 usuários ativos este mês."</text>
+
+  <!-- ===== CONTEXT BOX ===== -->
+  <!-- Context injected into Agente -->
+  <rect x="240" y="215" width="180" height="55" rx="8" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="330" y="235" text-anchor="middle" fill="#4F46E5" font-size="10" font-weight="700" font-family="sans-serif">Contexto MCP</text>
+  <text x="330" y="250" text-anchor="middle" fill="#6366F1" font-size="10" font-family="sans-serif">query · list_tables</text>
+  <text x="330" y="263" text-anchor="middle" fill="#6366F1" font-size="10" font-family="sans-serif">describe_table</text>
+
+  <!-- Arrow from context up into Agente -->
+  <line x1="330" y1="215" x2="330" y2="141" stroke="#818CF8" stroke-width="2"/>
+  <polygon points="330,141 324,149 336,149" fill="#818CF8"/>
+
+  <!-- Connection: MCP Server defines tools → context -->
+  <path d="M 620,135 Q 620,195 420,215" fill="none" stroke="#A78BFA" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <polygon points="420,215 427,208 425,219" fill="#A78BFA"/>
+
+  <!-- Label on connection -->
+  <text x="530" y="195" text-anchor="middle" fill="#7C3AED" font-size="9" font-family="sans-serif">tools definition</text>
+</svg>
