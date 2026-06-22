@@ -285,7 +285,7 @@ organizações de software já em produção (Stacklok 2026).
 | Código específico por par modelo-sistema | Compatível com qualquer modelo |
 | Manutenção N×M | Manutenção 1 por sistema |
 
-![](imagens/mcp-arquitetura.png)
+[![](imagens/mcp-arquitetura.png)](docs/mcp-arquitetura.md)
 
 Transportes: stdio (local) ou Streamable HTTP (remoto, produção).
 
@@ -408,7 +408,7 @@ de informação que cresce rápido e, se não for curado, degrada a qualidade.
 **Cenário:** agente precisa corrigir um bug na lógica de desconto em um
 repositório com 200 arquivos.
 
-![](imagens/contexto-comparacao.png)
+[![](imagens/contexto-comparacao.png)](docs/contexto-comparacao.md)
 
 > A diferença não está no modelo nem no prompt — está na **curadoria
 > do contexto**: selecionar só o relevante, comprimir o acessório e
@@ -452,7 +452,7 @@ elimina a principal fonte de ruído nas conversas.
 
 ## Exemplo concreto da distinção
 
-![](imagens/agentes-camadas.png)
+[![](imagens/agentes-camadas.png)](docs/agentes-camadas.md)
 
 O OpenCode/ClaudeCode é o **agente-ferramenta** (a plataforma).
 O "Engenheiro de Software Sênior Python" é um **agente customizado**
@@ -552,7 +552,7 @@ barreiras que transforma um LLM puro em um agente funcional e seguro.
 | **Hooks** (freio) | Bloqueiam ações perigosas | PreToolUse: "não execute rm -rf" |
 | **Sub-agentes** (cavalos especializados) | Dividem a carga | Um para segurança, outro para testes, outro para docs |
 
-![](imagens/harness-arreio.png)
+[![](imagens/harness-arreio.png)](docs/harness-arreio.md)
 
 ---
 
@@ -577,7 +577,7 @@ barreiras que transforma um LLM puro em um agente funcional e seguro.
 
 ---
 
-![](imagens/hierarquia-ia.png)
+[![](imagens/hierarquia-ia.png)](docs/hierarquia-ia.md)
 
 ---
 
